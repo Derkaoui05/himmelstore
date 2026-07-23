@@ -11,3 +11,84 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+model Product {
+  id            String   @id @default(cuid())
+  name          String
+  slug          String   @unique
+  description   String
+  brand         String
+  gender        Gender
+  concentration String?
+  images        String[]
+  featured      Boolean  @default(false)
+  active        Boolean  @default(true)
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id])
+  variants      Variant[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Variant {
+  id         String      @id @default(cuid())
+  productId  String
+  product    Product     @relation(fields: [productId], references: [id], onDelete: Cascade)
+  size       String
+  price      Decimal
+  stock      Int         @default(0)
+  sku        String      @unique
+  orderItems OrderItem[]
+}
+
+model Category {
+  id       String    @id @default(cuid())
+  name     String
+  slug     String    @unique
+  products Product[]
+}
+
+model Order {
+  id           String      @id @default(cuid())
+  orderNumber  String      @unique
+  customerName String
+  phone        String
+  city         String
+  address      String
+  status       OrderStatus @default(PENDING)
+  items        OrderItem[]
+  total        Decimal
+  notes        String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  variantId String
+  variant   Variant @relation(fields: [variantId], references: [id])
+  quantity  Int
+  price     Decimal
+}
+
+model Admin {
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
+  name     String
+}
+
+enum Gender {
+  HOMME
+  FEMME
+  UNISEXE
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
