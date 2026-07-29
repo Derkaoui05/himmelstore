@@ -1,5 +1,5 @@
 {
-  "name": "@himmel/api",
+  "name": "@himmel/types",
   "version": "1.0.0",
   "private": true,
   "main": "./src/index.ts",
@@ -11,10 +11,6 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@himmel/db": "*",
-    "@himmel/types": "*",
-    "@trpc/server": "^11.18.0",
-    "superjson": "^2.2.1",
     "zod": "^3.24.1"
   },
   "devDependencies": {
