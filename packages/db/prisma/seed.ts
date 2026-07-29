@@ -1,7 +1,16 @@
+import "dotenv/config";
 import { PrismaClient } from "../generated/prisma";
+import { PrismaPg } from "@prisma/adapter-pg";
 import { scryptSync, randomBytes } from "crypto";
 
-const prisma = new PrismaClient();
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+  throw new Error("DATABASE_URL environment variable is not set");
+}
+
+const adapter = new PrismaPg({ connectionString: databaseUrl });
+const prisma = new PrismaClient({ adapter });
 
 function hashPassword(password: string): string {
   const salt = randomBytes(16).toString("hex");
