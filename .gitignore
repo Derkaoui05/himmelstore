@@ -36,3 +36,12 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+
+.agents/
+.claude/
+.codex/
+.cursor/
+.gemini/
+.rovodev/
+.opencode/
+.impeccable/
