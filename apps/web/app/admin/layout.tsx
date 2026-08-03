@@ -66,7 +66,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </aside>
 
       {/* Main Content Area */}
-      <div className="flex-grow flex flex-col">
+      <div className="grow flex flex-col">
         {/* Top Header */}
         <header className="h-20 border-b border-white/5 bg-zinc-950/40 flex items-center justify-between px-8 backdrop-blur-sm">
           <h2 className="text-lg font-semibold text-zinc-100">
