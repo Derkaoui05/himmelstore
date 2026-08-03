@@ -139,6 +139,35 @@ export const productRouter = router({
     }),
 
   /**
+   * Get a single product by its ID (Admin only).
+   */
+  getById: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const product = await ctx.db.product.findUnique({
+        where: { id: input.id },
+        include: {
+          category: true,
+          variants: {
+            orderBy: {
+              price: "asc",
+            },
+          },
+        },
+      });
+
+      if (!product) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Produit non trouvé.",
+        });
+      }
+
+      return product;
+    }),
+
+
+  /**
    * Create a new product (Admin only).
    */
   create: protectedProcedure

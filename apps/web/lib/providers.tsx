@@ -5,6 +5,7 @@ import { httpBatchLink } from "@trpc/client";
 import { useState } from "react";
 import { trpcReact } from "./trpc-client";
 import superjson from "superjson";
+import { SessionProvider } from "next-auth/react";
 
 function getBaseUrl() {
   if (typeof window !== "undefined") return "";
@@ -37,8 +38,10 @@ export function TRPCProvider({ children }: { children: React.ReactNode }) {
   );
 
   return (
-    <trpcReact.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-    </trpcReact.Provider>
+    <SessionProvider>
+      <trpcReact.Provider client={trpcClient} queryClient={queryClient}>
+        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      </trpcReact.Provider>
+    </SessionProvider>
   );
 }
