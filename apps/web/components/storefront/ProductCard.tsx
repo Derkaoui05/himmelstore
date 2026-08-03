@@ -70,7 +70,7 @@ export default function ProductCard({ product }: { product: Product }) {
       </div>
 
       {/* Info Container */}
-      <div className="mt-4 flex flex-col flex-grow">
+      <div className="mt-4 flex flex-col grow">
         <span className="text-xs uppercase tracking-widest text-zinc-500">
           {product.brand}
         </span>

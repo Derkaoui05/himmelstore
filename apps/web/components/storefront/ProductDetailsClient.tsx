@@ -81,7 +81,7 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
               <button
                 key={idx}
                 onClick={() => setActiveImage(img)}
-                className={`relative aspect-square w-20 flex-shrink-0 overflow-hidden rounded-lg border transition-all ${
+                className={`relative aspect-square w-20 shrink-0 overflow-hidden rounded-lg border transition-all ${
                   activeImage === img ? "border-gold" : "border-zinc-800 hover:border-zinc-600"
                 }`}
               >
