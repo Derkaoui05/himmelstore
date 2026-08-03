@@ -9,6 +9,7 @@ import { trpcReact } from "@/lib/trpc-client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckoutInputSchema, type CheckoutInput } from "@himmel/types";
+import Image from "next/image";
 
 export default function CheckoutPage() {
   const { items, getTotal, clearCart } = useCartStore();
@@ -70,7 +71,7 @@ export default function CheckoutPage() {
     return (
       <div className="flex min-h-screen flex-col bg-black text-white">
         <Navbar />
-        <main className="flex-grow flex items-center justify-center">
+        <main className="grow flex items-center justify-center">
           <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" />
         </main>
         <Footer />
@@ -83,7 +84,7 @@ export default function CheckoutPage() {
     return (
       <div className="flex min-h-screen flex-col bg-black text-white">
         <Navbar />
-        <main className="mx-auto w-full max-w-2xl px-6 py-20 text-center flex-grow flex flex-col items-center justify-center">
+        <main className="mx-auto w-full max-w-2xl px-6 py-20 text-center grow flex flex-col items-center justify-center">
           <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500 mb-6">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="w-8 h-8">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
@@ -143,7 +144,7 @@ export default function CheckoutPage() {
     <div className="flex min-h-screen flex-col bg-black text-white">
       <Navbar />
 
-      <main className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 flex-grow">
+      <main className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 grow">
         <h1 className="font-heading text-3xl font-light text-white sm:text-4xl">
           Passer votre commande
         </h1>
@@ -268,10 +269,10 @@ export default function CheckoutPage() {
                 <div className="flex flex-col gap-4 max-h-60 overflow-y-auto pr-1 mb-6">
                   {items.map((item) => (
                     <div key={item.variantId} className="flex gap-4 items-center">
-                      <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded bg-zinc-900">
+                      <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded bg-zinc-900">
                         <Image src={item.image} alt={item.productName} fill className="object-cover" />
                       </div>
-                      <div className="flex-grow min-w-0">
+                      <div className="grow min-w-0">
                         <h4 className="text-xs font-semibold text-white truncate">{item.productName}</h4>
                         <p className="text-[10px] text-zinc-500">{item.brand} — {item.size}</p>
                       </div>
