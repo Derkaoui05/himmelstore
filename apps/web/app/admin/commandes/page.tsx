@@ -116,12 +116,12 @@ export default function AdminOrdersPage() {
               </div>
 
               {/* Middle Column: Items purchased */}
-              <div className="flex-grow md:flex-grow-0 md:w-80 flex flex-col gap-2 border-t md:border-t-0 md:border-x border-white/5 pt-4 md:pt-0 md:px-6">
+              <div className="grow md:grow-0 md:w-80 flex flex-col gap-2 border-t md:border-t-0 md:border-x border-white/5 pt-4 md:pt-0 md:px-6">
                 <span className="text-[10px] uppercase tracking-wider text-zinc-500 font-semibold">Articles commandés</span>
                 <div className="flex flex-col gap-2 max-h-40 overflow-y-auto">
                   {order.items.map((item) => (
                     <div key={item.id} className="flex justify-between items-center text-xs">
-                      <span className="text-zinc-300 truncate max-w-[180px]">
+                      <span className="text-zinc-300 truncate max-w-45">
                         {item.variant.product.name} ({item.variant.size})
                       </span>
                       <div className="flex gap-4">
@@ -138,7 +138,7 @@ export default function AdminOrdersPage() {
               </div>
 
               {/* Right Column: Update Status */}
-              <div className="flex flex-col justify-between items-start md:items-end gap-4 min-w-[150px]">
+              <div className="flex flex-col justify-between items-start md:items-end gap-4 min-w-37.5">
                 {/* Current Status Badge */}
                 <span
                   className={`rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-wider ${

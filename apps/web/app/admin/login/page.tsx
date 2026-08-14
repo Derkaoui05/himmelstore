@@ -45,7 +45,7 @@ export default function AdminLoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-black px-6">
       {/* Decorative background light */}
-      <div className="absolute top-1/2 left-1/2 h-[300px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/5 blur-[100px]" />
+      <div className="absolute top-1/2 left-1/2 h-75 w-125 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/5 blur-[100px]" />
 
       <div className="relative z-10 w-full max-w-md rounded-2xl border border-white/5 bg-zinc-950/80 p-8 shadow-2xl backdrop-blur-md">
         <div className="flex flex-col items-center gap-2 text-center">
