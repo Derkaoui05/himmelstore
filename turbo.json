@@ -9,7 +9,24 @@
       "dependsOn": ["^db:generate", "^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": [".next/**", "!.next/cache/**", "!.next/dev/**"],
-      "env": ["DATABASE_URL", "NEXTAUTH_SECRET", "NEXTAUTH_URL"]
+      "env": [
+        "DATABASE_URL",
+        "NEXTAUTH_SECRET",
+        "NEXTAUTH_URL",
+        "himmel_POSTGRES_PRISMA_URL",
+        "himmel_POSTGRES_PASSWORD",
+        "himmel_POSTGRES_HOST",
+        "himmel_POSTGRES_URL",
+        "himmel_POSTGRES_URL_NON_POOLING",
+        "himmel_POSTGRES_USER",
+        "himmel_POSTGRES_DATABASE",
+        "himmel_SUPABASE_URL",
+        "himmel_SUPABASE_ANON_KEY",
+        "himmel_SUPABASE_JWT_SECRET",
+        "himmel_SUPABASE_SECRET_KEY",
+        "himmel_SUPABASE_SERVICE_ROLE_KEY",
+        "himmel_SUPABASE_PUBLISHABLE_KEY"
+      ]
     },
     "lint": {
       "dependsOn": ["^lint"]
