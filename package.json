@@ -2,6 +2,7 @@
   "name": "himmel-store",
   "private": true,
   "scripts": {
+    "postinstall": "npm run db:generate -w @himmel/db",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
