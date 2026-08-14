@@ -41,9 +41,8 @@ function NavLink({
     <Link
       href={href}
       onClick={onNavigate}
-      className={`text-sm font-medium tracking-wide transition-colors hover:text-gold ${
-        active ? "text-gold" : "text-zinc-400"
-      } ${className}`}
+      className={`text-sm font-medium tracking-wide transition-colors hover:text-gold ${active ? "text-gold" : "text-zinc-400"
+        } ${className}`}
     >
       {label}
     </Link>
@@ -78,24 +77,27 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-8">
         {/* Logo + desktop nav */}
         <div className="flex min-w-0 items-center gap-6 md:gap-8">
-          <Link href="/" className="shrink-0">
-            <span className="font-heading text-xl font-bold tracking-widest text-gold transition-colors hover:text-gold-light sm:text-2xl">
+          <Link href="/" className="flex flex-col">
+            <span className="font-heading text-xl  font-bold tracking-widest text-gold-dark transition-colors hover:text-gold-light sm:text-2xl">
               HIMMEL
+            </span>
+            <span className="font-heading text-xs uppercase  w-fit ml-8 tracking-wide">
+              fatima zahrae derkaoui
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-8 md:flex" aria-label="Navigation principale">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.href}
-                href={link.href}
-                label={link.label}
-                active={link.isActive(pathname)}
-              />
-            ))}
-          </nav>
-        </div>
 
+        </div>
+        <nav className="hidden items-center gap-8 md:flex" aria-label="Navigation principale">
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.href}
+              href={link.href}
+              label={link.label}
+              active={link.isActive(pathname)}
+            />
+          ))}
+        </nav>
         {/* Actions */}
         <div className="flex items-center gap-3 sm:gap-6">
           <Link
@@ -156,9 +158,8 @@ export default function Navbar() {
       {/* Mobile menu */}
       <div
         id="mobile-nav"
-        className={`overflow-hidden border-t border-white/10 bg-black/95 backdrop-blur-md transition-[max-height,opacity] duration-300 ease-in-out md:hidden ${
-          menuOpen ? "max-h-[calc(100dvh-4rem)] opacity-100" : "max-h-0 opacity-0"
-        }`}
+        className={`overflow-hidden border-t border-white/10 bg-black/95 backdrop-blur-md transition-[max-height,opacity] duration-300 ease-in-out md:hidden ${menuOpen ? "max-h-[calc(100dvh-4rem)] opacity-100" : "max-h-0 opacity-0"
+          }`}
         aria-hidden={!menuOpen}
       >
         <nav className="mx-auto flex max-w-7xl flex-col px-4 py-4 sm:px-8" aria-label="Navigation mobile">

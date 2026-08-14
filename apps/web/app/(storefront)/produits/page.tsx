@@ -58,7 +58,7 @@ export default async function CatalogPage({ searchParams }: PageProps) {
   };
 
   return (
-    <main className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-8 grow">
+    <main className="mx-auto w-full  max-w-7xl px-6 py-12 sm:px-8 grow">
         {/* Page Header */}
         <div className="border-b border-white/5 pb-8 mb-10">
           <span className="text-xs font-semibold uppercase tracking-wider text-gold">Explorez</span>

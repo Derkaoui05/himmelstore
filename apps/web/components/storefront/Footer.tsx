@@ -2,22 +2,25 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-white/5 bg-black py-16 text-zinc-500">
+    <footer className="border-t border-border bg-black py-16 text-white">
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-4">
-          {/* Brand Info */}
           <div className="flex flex-col gap-4">
-            <span className="font-heading text-xl font-bold tracking-widest text-gold">
-              HIMMEL
-            </span>
-            <p className="text-sm leading-relaxed text-zinc-400">
+            <Link href="/" className="flex flex-col">
+              <span className="font-heading text-xl  font-bold tracking-widest text-gold transition-colors  sm:text-2xl">
+                HIMMEL
+              </span>
+              <span className="font-heading text-xs uppercase  w-fit ml-8 tracking-wide">
+                fatima zahrae derkaoui
+              </span>
+            </Link>
+            <p className="text-sm leading-relaxed">
               Votre destination ultime pour les parfums de luxe et de niche au Maroc. L'excellence olfactive livrée chez vous.
             </p>
           </div>
 
-          {/* Links: Boutique */}
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-white">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground">
               Boutique
             </h3>
             <ul className="mt-4 flex flex-col gap-3 text-sm">
@@ -44,44 +47,30 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Links: Services */}
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-white">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground">
               Service Client
             </h3>
             <ul className="mt-4 flex flex-col gap-3 text-sm">
-              <li>
-                <span className="text-zinc-400">Livraison Gratuite (Morocco-wide)</span>
-              </li>
-              <li>
-                <span className="text-zinc-400">Paiement à la livraison (COD)</span>
-              </li>
-              <li>
-                <span className="text-zinc-400">Support Clientèle H24</span>
-              </li>
+              <li>Livraison Gratuite (Morocco-wide)</li>
+              <li>Paiement à la livraison (COD)</li>
+              <li>Support Clientèle H24</li>
             </ul>
           </div>
 
-          {/* Contact details */}
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-white">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-foreground">
               Contact
             </h3>
-            <ul className="mt-4 flex flex-col gap-3 text-sm text-zinc-400">
-              <li>
-                <span>Email: contact@himmel.ma</span>
-              </li>
-              <li>
-                <span>Tél: +212 6 12 34 56 78</span>
-              </li>
-              <li>
-                <span>Casablanca, Maroc</span>
-              </li>
+            <ul className="mt-4 flex flex-col gap-3 text-sm">
+              <li>Email: contact@himmel.ma</li>
+              <li>Tél: +212 6 12 34 56 78</li>
+              <li>Casablanca, Maroc</li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/5 pt-8 text-center text-xs">
+        <div className="mt-12 border-t border-border pt-8 text-center text-xs">
           <p>&copy; {new Date().getFullYear()} Himmel Store. Tous droits réservés.</p>
         </div>
       </div>

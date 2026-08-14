@@ -21,16 +21,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="flex min-h-screen bg-black text-white">
       {/* Sidebar */}
-      <aside className="w-64 border-r border-white/5 bg-zinc-950 flex flex-col justify-between">
+      <aside className="w-72 border-r border-white/5 bg-zinc-950 flex flex-col justify-between">
         <div>
           {/* Logo */}
-          <div className="h-20 flex items-center px-8 border-b border-white/5">
-            <Link href="/" className="font-heading text-xl font-bold tracking-widest text-gold">
+          <div className="h-24 mt-4 flex flex-col  items-center px-12 border-b border-white/5">
+            <Link href="/" className="flex flex-col w-full">
+            <span className="font-heading text-xl  font-bold tracking-widest text-gold-dark transition-colors hover:text-gold-light sm:text-2xl">
               HIMMEL
-            </Link>
-            <span className="ml-2 text-[10px] bg-zinc-900 text-zinc-500 px-2 py-0.5 rounded uppercase tracking-wider font-semibold">
-              Admin
             </span>
+            <span className="font-heading text-xs uppercase  w-fit ml-8 tracking-wide">
+              fatima zahrae derkaoui
+            </span>
+          </Link>
           </div>
 
           {/* Navigation Links */}

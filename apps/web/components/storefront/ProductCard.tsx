@@ -7,7 +7,7 @@ import { useState } from "react";
 interface Variant {
   id: string;
   size: string;
-  price: any; // Decimal type from Prisma
+  price: any;
   stock: number;
 }
 
@@ -24,12 +24,10 @@ interface Product {
 
 export default function ProductCard({ product }: { product: Product }) {
   const [isHovered, setIsHovered] = useState(false);
-  
-  // Find the lowest price
+
   const prices = product.variants.map((v) => Number(v.price));
   const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
-  
-  // Gender labels
+
   const genderLabels = {
     HOMME: "Homme",
     FEMME: "Femme",
@@ -42,12 +40,11 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       href={`/produits/${product.slug}`}
-      className="group flex flex-col overflow-hidden rounded-xl border border-white/5 bg-zinc-950/40 p-4 transition-all duration-300 hover:border-gold/50 hover:bg-zinc-900/50 hover:shadow-2xl hover:shadow-gold/5"
+      className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card p-4 shadow-sm transition-all duration-300 hover:border-gold/50 hover:shadow-lg hover:shadow-gold/5"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Image container */}
-      <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-zinc-900">
+      <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-muted">
         <Image
           src={isHovered ? hoverImage : displayImage}
           alt={product.name}
@@ -55,33 +52,29 @@ export default function ProductCard({ product }: { product: Product }) {
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-cover transition-all duration-500 group-hover:scale-105"
         />
-        
-        {/* Gender Badge */}
-        <span className="absolute left-3 top-3 rounded-full bg-black/70 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-zinc-300 backdrop-blur-sm">
+
+        <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-zinc-700 shadow-sm backdrop-blur-sm">
           {genderLabels[product.gender]}
         </span>
-        
-        {/* Concentration Badge */}
+
         {product.concentration && (
-          <span className="absolute right-3 top-3 rounded-full bg-gold/10 border border-gold/20 px-3 py-1 text-[10px] font-semibold text-gold backdrop-blur-sm">
+          <span className="absolute right-3 top-3 rounded-full border border-gold/30 bg-gold/10 px-3 py-1 text-[10px] font-semibold text-gold-dark backdrop-blur-sm">
             {product.concentration}
           </span>
         )}
       </div>
 
-      {/* Info Container */}
       <div className="mt-4 flex flex-col grow">
-        <span className="text-xs uppercase tracking-widest text-zinc-500">
+        <span className="text-xs uppercase tracking-widest text-muted-foreground">
           {product.brand}
         </span>
-        <h3 className="mt-1 text-base font-semibold text-white group-hover:text-gold transition-colors line-clamp-1">
+        <h3 className="mt-1 text-base font-semibold text-foreground transition-colors group-hover:text-gold line-clamp-1">
           {product.name}
         </h3>
-        
-        {/* Price & Action */}
-        <div className="mt-auto pt-4 flex items-center justify-between border-t border-white/5">
+
+        <div className="mt-auto flex items-center justify-between border-t border-border pt-4">
           <div className="flex flex-col">
-            <span className="text-[10px] uppercase tracking-wider text-zinc-500">
+            <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
               À partir de
             </span>
             <span className="text-lg font-bold text-gold">
@@ -89,7 +82,7 @@ export default function ProductCard({ product }: { product: Product }) {
             </span>
           </div>
 
-          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-800 bg-zinc-950 text-zinc-400 transition-all duration-300 group-hover:border-gold group-hover:bg-gold group-hover:text-black">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-all duration-300 group-hover:border-gold group-hover:bg-gold group-hover:text-black">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
