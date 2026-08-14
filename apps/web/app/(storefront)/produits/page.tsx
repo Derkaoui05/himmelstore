@@ -82,7 +82,7 @@ export default async function CatalogPage({ searchParams }: PageProps) {
           </aside>
 
           {/* Product Grid & List */}
-          <div className="lg:col-span-3 flex flex-col justify-between">
+          <div className="lg:col-span-3 flex  flex-col justify-between">
             {productsData.products.length > 0 ? (
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {productsData.products.map((product: any) => (
@@ -90,7 +90,7 @@ export default async function CatalogPage({ searchParams }: PageProps) {
                 ))}
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center py-24 rounded-xl border border-dashed border-zinc-800 bg-zinc-950/20 text-center">
+              <div className="flex flex-col items-center  justify-center py-24 rounded-xl border border-dashed border-zinc-800 bg-zinc-950/20 text-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-12 h-12 text-zinc-600 mb-4">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
                 </svg>
@@ -109,7 +109,7 @@ export default async function CatalogPage({ searchParams }: PageProps) {
 
             {/* Pagination */}
             {productsData.totalPages > 1 && (
-              <div className="mt-12 flex items-center justify-center gap-2 border-t border-white/5 pt-8">
+              <div className="mt-12 flex  items-center justify-center gap-2 border-t border-white/5 pt-8">
                 {/* Prev page button */}
                 {page > 1 ? (
                   <Link

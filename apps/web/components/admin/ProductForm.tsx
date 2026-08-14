@@ -192,7 +192,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
 
         {/* Brand */}
         <div className="flex flex-col gap-1.5">
-          <label className="text-xs font-semibold uppercase tracking-wider text-zinc-400 font-medium">Marque *</label>
+          <label className="text-xs font-semibold uppercase tracking-wider text-zinc-400">Marque *</label>
           <input
             type="text"
             placeholder="Ex: Chanel"
@@ -247,7 +247,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
 
       {/* Description */}
       <div className="flex flex-col gap-1.5">
-        <label className="text-xs font-semibold uppercase tracking-wider text-zinc-400 font-medium">Description *</label>
+        <label className="text-xs font-semibold uppercase tracking-wider text-zinc-400">Description *</label>
         <textarea
           placeholder="Décrivez les notes de tête, de cœur, de fond, et l'histoire olfactive..."
           rows={4}
@@ -307,7 +307,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
             placeholder="Entrez l'URL d'une image (ex: Unsplash, Cloudinary...)"
             value={newImageUrl}
             onChange={(e) => setNewImageUrl(e.target.value)}
-            className="flex-grow rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-2 text-sm text-white focus:border-gold focus:outline-none"
+            className="grow rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-2 text-sm text-white focus:border-gold focus:outline-none"
           />
           <button
             type="button"
