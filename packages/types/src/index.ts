@@ -46,8 +46,8 @@ export const ProductInputSchema = z.object({
   gender: GenderSchema,
   concentration: z.string().nullable().optional(),
   images: z.array(z.string()).min(1, "Au moins une image est requise"),
-  featured: z.boolean().default(false),
-  active: z.boolean().default(true),
+  featured: z.boolean(),
+  active: z.boolean(),
   categoryId: z.string().min(1, "La catégorie est requise"),
   variants: z.array(VariantInputSchema).min(1, "Au moins une variante est requise"),
 });
