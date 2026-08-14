@@ -1,159 +1,191 @@
-# Turborepo starter
+# 🌸 Himmel Store
 
-This Turborepo starter is maintained by the Turborepo core team.
+> A premium luxury fragrance e-commerce platform built with a modern full-stack monorepo architecture.
 
-## Using this example
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-7.9-2D3748?style=flat-square&logo=prisma)](https://www.prisma.io/)
+[![tRPC](https://img.shields.io/badge/tRPC-11-398ccb?style=flat-square)](https://trpc.io/)
+[![Turborepo](https://img.shields.io/badge/Turborepo-2.10-EF4444?style=flat-square)](https://turbo.build/)
 
-Run the following command:
+---
 
-```sh
-npx create-turbo@latest
+## ✨ Features
+
+### 🛍️ Storefront
+- **Product Catalog** — Browse & filter fragrances by gender, brand, category, and price range
+- **Product Detail Pages** — Rich product pages with image galleries and variant selection (size/price)
+- **Shopping Cart** — Persistent client-side cart with Zustand state management
+- **Checkout** — Simple cash-on-delivery checkout with order creation
+- **Responsive Design** — Mobile-first premium dark UI with gold accents
+
+### ⚙️ Admin Dashboard
+- **Product Management** — Create, edit, and delete products with multi-image support and variant configuration
+- **Order Management** — View and update order statuses
+- **Category Management** — Manage product categories
+- **Protected Routes** — NextAuth.js session-based admin authentication
+
+---
+
+## 🏗️ Tech Stack
+
+| Layer | Technology |
+|:------|:-----------|
+| **Framework** | [Next.js 16](https://nextjs.org/) (App Router, Turbopack) |
+| **Language** | [TypeScript 5.9](https://www.typescriptlang.org/) |
+| **Styling** | Tailwind CSS v4 with custom design tokens |
+| **API** | [tRPC v11](https://trpc.io/) with React Query |
+| **Database** | PostgreSQL via [Supabase](https://supabase.com/) |
+| **ORM** | [Prisma v7](https://www.prisma.io/) with `@prisma/adapter-pg` |
+| **Auth** | [NextAuth.js v4](https://next-auth.js.org/) with Credentials provider |
+| **State** | [Zustand](https://github.com/pmndrs/zustand) (cart persistence) |
+| **Monorepo** | [Turborepo](https://turbo.build/) |
+| **Deployment** | [Vercel](https://vercel.com/) |
+
+---
+
+## 📁 Project Structure
+
+```
+himmel-store/
+├── apps/
+│   └── web/                    # Next.js frontend app
+│       ├── app/
+│       │   ├── (storefront)/   # Public storefront pages
+│       │   │   ├── produits/   # Product catalog
+│       │   │   ├── panier/     # Cart
+│       │   │   └── commande/   # Checkout
+│       │   ├── admin/          # Admin dashboard (protected)
+│       │   └── api/trpc/       # tRPC API route handler
+│       ├── components/
+│       │   ├── storefront/     # Storefront UI components
+│       │   └── admin/          # Admin UI components
+│       └── lib/                # tRPC client, store, utilities
+│
+├── packages/
+│   ├── api/                    # @himmel/api — tRPC routers & procedures
+│   │   └── src/routers/        # product, order, category, admin routers
+│   ├── db/                     # @himmel/db — Prisma client & schema
+│   │   ├── prisma/
+│   │   │   ├── schema.prisma   # Database models
+│   │   │   └── seed.ts         # Seed data script
+│   │   └── prisma.config.ts    # Prisma v7 configuration
+│   └── types/                  # @himmel/types — Shared Zod schemas & types
+│
+├── turbo.json                  # Turborepo pipeline config
+└── package.json                # Root workspace config
 ```
 
-## What's inside?
+---
 
-This Turborepo includes the following packages/apps:
+## 🚀 Getting Started
 
-### Apps and Packages
+### Prerequisites
+- Node.js >= 18
+- npm >= 10
+- PostgreSQL database (Supabase recommended)
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo build
+### 1. Clone the repository
+```bash
+git clone https://github.com/Derkaoui05/himmelstore.git
+cd himmelstore
 ```
 
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo build
-npm dlx turbo build
-npm exec turbo build
+### 2. Install dependencies
+```bash
+npm install
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+### 3. Configure environment variables
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo build --filter=docs
+Create a `.env` file in the root:
+```env
+DATABASE_URL="postgres://<user>:<password>@<host>:5432/<db>?sslmode=require"
+NEXTAUTH_SECRET="your-secret-here"
 ```
 
-Without global `turbo`:
-
-```sh
-npx turbo build --filter=docs
-npm exec turbo build --filter=docs
-npm exec turbo build --filter=docs
+Create `apps/web/.env.local`:
+```env
+DATABASE_URL="postgres://<user>:<password>@<host>:5432/<db>?sslmode=require"
+NEXTAUTH_SECRET="your-secret-here"
+NEXTAUTH_URL="http://localhost:3000"
 ```
 
-### Develop
-
-To develop all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo dev
+Create `packages/db/.env`:
+```env
+DATABASE_URL="postgres://<user>:<password>@<host>:5432/<db>?sslmode=require"
 ```
 
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo dev
-npm exec turbo dev
-npm exec turbo dev
+### 4. Generate Prisma Client
+```bash
+npm run db:generate -w @himmel/db
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
+### 5. Push database schema
+```bash
+npm run db:push -w @himmel/db
 ```
 
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-npm exec turbo dev --filter=web
-npm exec turbo dev --filter=web
+### 6. Seed the database
+```bash
+npm run db:seed -w @himmel/db
 ```
 
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
+### 7. Start development server
+```bash
+npm run dev
 ```
 
-Without global `turbo`, use your package manager:
+The app runs at **http://localhost:3000**.
 
-```sh
-cd my-turborepo
-npx turbo login
-npm exec turbo login
-npm exec turbo login
-```
+---
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+## 🌐 Deployment (Vercel)
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+### Environment Variables on Vercel
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+Add these in **Project Settings → Environment Variables**:
 
-```sh
-turbo link
-```
+| Variable | Description |
+|:---------|:------------|
+| `DATABASE_URL` | Supabase pooler URL (port 6543) with `pgbouncer=true` |
+| `NEXTAUTH_SECRET` | Random secret for session encryption |
+| `NEXTAUTH_URL` | Your production Vercel URL |
 
-Without global `turbo`:
+### Supabase URL Reference
 
-```sh
-npx turbo link
-npm exec turbo link
-npm exec turbo link
-```
+| Usage | URL Type |
+|:------|:---------|
+| **Vercel Production** (`DATABASE_URL`) | `POSTGRES_PRISMA_URL` — port 6543 with pgbouncer |
+| **Schema migrations** (`db:push`) | `POSTGRES_URL_NON_POOLING` — port 5432 direct |
 
-## Useful Links
+---
 
-Learn more about the power of Turborepo:
+## 🔐 Admin Credentials (Default Seed)
 
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+| Field | Value |
+|:------|:------|
+| Email | `admin@himmel.ma` |
+| Password | `admin123` |
+
+> ⚠️ Change the admin password after first login in production.
+
+---
+
+## 📦 Package Scripts
+
+| Command | Description |
+|:--------|:------------|
+| `npm run dev` | Start all apps in development mode |
+| `npm run build` | Build all apps and packages |
+| `npm run lint` | Run ESLint across the monorepo |
+| `npm run check-types` | TypeScript type checking |
+| `npm run db:generate -w @himmel/db` | Generate Prisma Client |
+| `npm run db:push -w @himmel/db` | Push schema to database |
+| `npm run db:seed -w @himmel/db` | Seed the database with sample data |
+
+---
+
+## 📄 License
+
+MIT — Built with ❤️ by [Derkaoui05](https://github.com/Derkaoui05)
