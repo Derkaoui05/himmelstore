@@ -22,9 +22,9 @@ export default async function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative flex h-[85vh] items-center justify-center overflow-hidden bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-zinc-900 via-black to-black px-6">
+      <section className="relative flex h-[85vh] items-center justify-center overflow-hidden bg-[radial-gradient(ellipse_at_center,var(--tw-gradient-stops))] from-zinc-900 via-black to-black px-6">
         {/* Decorative ambient gold light */}
-        <div className="absolute top-1/4 left-1/2 h-[400px] w-[600px] -translate-x-1/2 rounded-full bg-gold/5 blur-[120px]" />
+        <div className="absolute top-1/4 left-1/2 h-100GI w-150 -translate-x-1/2 rounded-full bg-gold/5 blur-[120px]" />
         
         <div className="relative z-10 mx-auto max-w-5xl text-center flex flex-col items-center">
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-gold animate-fade-in">
@@ -65,7 +65,7 @@ export default async function Home() {
                 </svg>
               </div>
               <h3 className="text-sm font-semibold text-white uppercase tracking-wider">100% Authentique</h3>
-              <p className="mt-2 text-xs text-zinc-500 max-w-[240px]">Tous nos parfums proviennent directement des canaux officiels certifiés.</p>
+              <p className="mt-2 text-xs text-zinc-500 max-w-60">Tous nos parfums proviennent directement des canaux officiels certifiés.</p>
             </div>
             <div className="flex flex-col items-center">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold/10 text-gold mb-4">
@@ -74,7 +74,7 @@ export default async function Home() {
                 </svg>
               </div>
               <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Livraison Partout au Maroc</h3>
-              <p className="mt-2 text-xs text-zinc-500 max-w-[240px]">Expédition rapide en 24/48h. Livraison gratuite à domicile.</p>
+              <p className="mt-2 text-xs text-zinc-500 max-w-60">Expédition rapide en 24/48h. Livraison gratuite à domicile.</p>
             </div>
             <div className="flex flex-col items-center">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gold/10 text-gold mb-4">
@@ -83,7 +83,7 @@ export default async function Home() {
                 </svg>
               </div>
               <h3 className="text-sm font-semibold text-white uppercase tracking-wider">Paiement à la Livraison</h3>
-              <p className="mt-2 text-xs text-zinc-500 max-w-[240px]">Payez en toute sécurité en espèces lors de la réception de votre colis.</p>
+              <p className="mt-2 text-xs text-zinc-500 max-w-60">Payez en toute sécurité en espèces lors de la réception de votre colis.</p>
             </div>
           </div>
         </div>
