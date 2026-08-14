@@ -3,8 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useCartStore } from "@/lib/store";
-import Navbar from "@/components/storefront/Navbar";
-import Footer from "@/components/storefront/Footer";
 import { useState, useEffect } from "react";
 
 export default function CartPage() {
@@ -17,21 +15,14 @@ export default function CartPage() {
 
   if (!mounted) {
     return (
-      <div className="flex min-h-screen flex-col bg-black text-white">
-        <Navbar />
-        <main className="flex-grow flex items-center justify-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" />
-        </main>
-        <Footer />
-      </div>
+      <main className="grow flex items-center justify-center py-20">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" />
+      </main>
     );
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-black text-white">
-      <Navbar />
-
-      <main className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 flex-grow">
+    <main className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 grow">
         <h1 className="font-heading text-3xl font-light text-white sm:text-4xl">
           Votre Panier
         </h1>
@@ -173,8 +164,5 @@ export default function CartPage() {
           </div>
         )}
       </main>
-
-      <Footer />
-    </div>
   );
 }

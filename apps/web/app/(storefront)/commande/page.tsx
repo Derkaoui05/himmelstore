@@ -3,8 +3,6 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useCartStore } from "@/lib/store";
-import Navbar from "@/components/storefront/Navbar";
-import Footer from "@/components/storefront/Footer";
 import { trpcReact } from "@/lib/trpc-client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -69,82 +67,71 @@ export default function CheckoutPage() {
 
   if (!mounted) {
     return (
-      <div className="flex min-h-screen flex-col bg-black text-white">
-        <Navbar />
-        <main className="grow flex items-center justify-center">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" />
-        </main>
-        <Footer />
-      </div>
+      <main className="grow flex items-center justify-center py-20">
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" />
+      </main>
     );
   }
 
   // Render Confirmation Screen upon success
   if (successOrder) {
     return (
-      <div className="flex min-h-screen flex-col bg-black text-white">
-        <Navbar />
-        <main className="mx-auto w-full max-w-2xl px-6 py-20 text-center grow flex flex-col items-center justify-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500 mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="w-8 h-8">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-            </svg>
-          </div>
-          
-          <span className="text-xs font-semibold uppercase tracking-widest text-emerald-500">
-            Commande Confirmée
-          </span>
-          <h1 className="mt-4 font-heading text-3xl font-light sm:text-4xl text-white">
-            Merci pour votre confiance !
-          </h1>
-          
-          <p className="mt-4 text-sm text-zinc-400 max-w-md">
-            Votre commande a été enregistrée avec succès. Notre équipe vous contactera par téléphone pour valider la livraison.
-          </p>
+      <main className="mx-auto w-full max-w-2xl px-6 py-20 text-center grow flex flex-col items-center justify-center">
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500 mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="w-8 h-8">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+          </svg>
+        </div>
+        
+        <span className="text-xs font-semibold uppercase tracking-widest text-emerald-500">
+          Commande Confirmée
+        </span>
+        <h1 className="mt-4 font-heading text-3xl font-light sm:text-4xl text-white">
+          Merci pour votre confiance !
+        </h1>
+        
+        <p className="mt-4 text-sm text-zinc-400 max-w-md">
+          Votre commande a été enregistrée avec succès. Notre équipe vous contactera par téléphone pour valider la livraison.
+        </p>
 
-          {/* Details Box */}
-          <div className="mt-8 w-full rounded-xl border border-white/5 bg-zinc-950/40 p-6 text-left">
-            <div className="flex justify-between border-b border-white/5 pb-3 text-sm">
-              <span className="text-zinc-500">N° de commande</span>
-              <span className="font-bold text-gold tracking-wide">{successOrder.orderNumber}</span>
-            </div>
-            <div className="flex justify-between border-b border-white/5 py-3 text-sm">
-              <span className="text-zinc-500">Client</span>
-              <span className="text-white">{successOrder.customerName}</span>
-            </div>
-            <div className="flex justify-between border-b border-white/5 py-3 text-sm">
-              <span className="text-zinc-500">Téléphone</span>
-              <span className="text-white">{successOrder.phone}</span>
-            </div>
-            <div className="flex justify-between border-b border-white/5 py-3 text-sm">
-              <span className="text-zinc-500">Ville</span>
-              <span className="text-white">{successOrder.city}</span>
-            </div>
-            <div className="flex justify-between pt-3 text-sm">
-              <span className="text-zinc-500 font-semibold">Total à payer (à la livraison)</span>
-              <span className="font-bold text-gold">{Number(successOrder.total).toLocaleString("fr-FR")} DH</span>
-            </div>
+        {/* Details Box */}
+        <div className="mt-8 w-full rounded-xl border border-white/5 bg-zinc-950/40 p-6 text-left">
+          <div className="flex justify-between border-b border-white/5 pb-3 text-sm">
+            <span className="text-zinc-500">N° de commande</span>
+            <span className="font-bold text-gold tracking-wide">{successOrder.orderNumber}</span>
           </div>
+          <div className="flex justify-between border-b border-white/5 py-3 text-sm">
+            <span className="text-zinc-500">Client</span>
+            <span className="text-white">{successOrder.customerName}</span>
+          </div>
+          <div className="flex justify-between border-b border-white/5 py-3 text-sm">
+            <span className="text-zinc-500">Téléphone</span>
+            <span className="text-white">{successOrder.phone}</span>
+          </div>
+          <div className="flex justify-between border-b border-white/5 py-3 text-sm">
+            <span className="text-zinc-500">Ville</span>
+            <span className="text-white">{successOrder.city}</span>
+          </div>
+          <div className="flex justify-between pt-3 text-sm">
+            <span className="text-zinc-500 font-semibold">Total à payer (à la livraison)</span>
+            <span className="font-bold text-gold">{Number(successOrder.total).toLocaleString("fr-FR")} DH</span>
+          </div>
+        </div>
 
-          <div className="mt-10 flex gap-4">
-            <Link
-              href="/produits"
-              className="inline-flex h-12 items-center justify-center rounded-full bg-gold px-8 text-sm font-semibold uppercase tracking-wider text-black transition-all hover:bg-gold-light hover:scale-105"
-            >
-              Retourner à la boutique
-            </Link>
-          </div>
-        </main>
-        <Footer />
-      </div>
+        <div className="mt-10 flex gap-4">
+          <Link
+            href="/produits"
+            className="inline-flex h-12 items-center justify-center rounded-full bg-gold px-8 text-sm font-semibold uppercase tracking-wider text-black transition-all hover:bg-gold-light hover:scale-105"
+          >
+            Retourner à la boutique
+          </Link>
+        </div>
+      </main>
     );
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-black text-white">
-      <Navbar />
-
-      <main className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 grow">
+    <main className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 grow">
         <h1 className="font-heading text-3xl font-light text-white sm:text-4xl">
           Passer votre commande
         </h1>
@@ -317,8 +304,5 @@ export default function CheckoutPage() {
           </div>
         )}
       </main>
-
-      <Footer />
-    </div>
   );
 }

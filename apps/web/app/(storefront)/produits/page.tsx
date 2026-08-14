@@ -1,5 +1,3 @@
-import Navbar from "@/components/storefront/Navbar";
-import Footer from "@/components/storefront/Footer";
 import ProductFilters from "@/components/storefront/ProductFilters";
 import ProductCard from "@/components/storefront/ProductCard";
 import { serverTrpc } from "@/lib/trpc-server";
@@ -60,10 +58,7 @@ export default async function CatalogPage({ searchParams }: PageProps) {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-black text-white">
-      <Navbar />
-
-      <main className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-8 grow">
+    <main className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-8 grow">
         {/* Page Header */}
         <div className="border-b border-white/5 pb-8 mb-10">
           <span className="text-xs font-semibold uppercase tracking-wider text-gold">Explorez</span>
@@ -166,8 +161,5 @@ export default async function CatalogPage({ searchParams }: PageProps) {
           </div>
         </div>
       </main>
-
-      <Footer />
-    </div>
   );
 }

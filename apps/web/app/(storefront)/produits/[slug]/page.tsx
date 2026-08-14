@@ -1,5 +1,3 @@
-import Navbar from "@/components/storefront/Navbar";
-import Footer from "@/components/storefront/Footer";
 import ProductDetailsClient from "@/components/storefront/ProductDetailsClient";
 import { serverTrpc } from "@/lib/trpc-server";
 import { notFound } from "next/navigation";
@@ -47,14 +45,8 @@ export default async function ProductDetailPage({ params }: PageProps) {
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-black text-white">
-      <Navbar />
-
-      <main className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 flex-grow">
-        <ProductDetailsClient product={product} />
-      </main>
-
-      <Footer />
-    </div>
+    <main className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-8 grow">
+      <ProductDetailsClient product={product} />
+    </main>
   );
 }

@@ -77,7 +77,13 @@ export const productRouter = router({
       ]);
 
       return {
-        products,
+        products: products.map((p) => ({
+          ...p,
+          variants: p.variants.map((v) => ({
+            ...v,
+            price: Number(v.price),
+          })),
+        })),
         totalCount,
         totalPages: Math.ceil(totalCount / limit),
         currentPage: page,
@@ -90,7 +96,7 @@ export const productRouter = router({
   getFeatured: publicProcedure
     .input(z.object({ limit: z.number().default(6) }))
     .query(async ({ ctx, input }) => {
-      return ctx.db.product.findMany({
+      const products = await ctx.db.product.findMany({
         where: {
           featured: true,
           active: true,
@@ -108,6 +114,14 @@ export const productRouter = router({
           createdAt: "desc",
         },
       });
+
+      return products.map((p) => ({
+        ...p,
+        variants: p.variants.map((v) => ({
+          ...v,
+          price: Number(v.price),
+        })),
+      }));
     }),
 
   /**
@@ -135,7 +149,13 @@ export const productRouter = router({
         });
       }
 
-      return product;
+      return {
+        ...product,
+        variants: product.variants.map((v) => ({
+          ...v,
+          price: Number(v.price),
+        })),
+      };
     }),
 
   /**
@@ -163,7 +183,13 @@ export const productRouter = router({
         });
       }
 
-      return product;
+      return {
+        ...product,
+        variants: product.variants.map((v) => ({
+          ...v,
+          price: Number(v.price),
+        })),
+      };
     }),
 
 

@@ -28,6 +28,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<ProductInput>({
     resolver: zodResolver(ProductInputSchema),
@@ -65,6 +66,31 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
           variants: [{ size: "100ml", price: "", stock: 10, sku: "" }],
         },
   });
+
+  // Re-populate form when initialData arrives asynchronously
+  useEffect(() => {
+    if (initialData) {
+      reset({
+        name: initialData.name,
+        slug: initialData.slug,
+        description: initialData.description,
+        brand: initialData.brand,
+        gender: initialData.gender,
+        concentration: initialData.concentration || "",
+        images: initialData.images || [],
+        featured: initialData.featured,
+        active: initialData.active,
+        categoryId: initialData.categoryId,
+        variants: initialData.variants.map((v: any) => ({
+          id: v.id,
+          size: v.size,
+          price: String(v.price),
+          stock: v.stock,
+          sku: v.sku,
+        })),
+      });
+    }
+  }, [initialData, reset]);
 
   const { fields: variantFields, append: appendVariant, remove: removeVariant } = useFieldArray({
     control,
