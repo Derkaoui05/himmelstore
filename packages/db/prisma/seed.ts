@@ -1,6 +1,3 @@
-// Allow self-signed SSL certificates for Supabase connection in seed script
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
 import "dotenv/config";
 import { PrismaClient } from "../generated/prisma";
 import { PrismaPg } from "@prisma/adapter-pg";
@@ -13,8 +10,15 @@ if (!databaseUrl) {
   throw new Error("DATABASE_URL environment variable is not set");
 }
 
+const cleanDatabaseUrl = (url: string) => {
+  const parsed = new URL(url);
+  parsed.searchParams.delete("pgbouncer");
+  parsed.searchParams.delete("sslmode");
+  return parsed.toString();
+};
+
 const pool = new Pool({
-  connectionString: databaseUrl,
+  connectionString: cleanDatabaseUrl(databaseUrl),
   ssl: {
     rejectUnauthorized: false,
   },

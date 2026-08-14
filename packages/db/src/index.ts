@@ -6,6 +6,19 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
+function cleanDatabaseUrl(url: string): string {
+  const parsed = new URL(url);
+
+  // Prisma-only flag; not understood by the pg driver
+  parsed.searchParams.delete("pgbouncer");
+
+  // sslmode=require is parsed by pg into ssl: {}, which overrides Pool ssl config
+  // and rejects Supabase's certificate chain on Vercel
+  parsed.searchParams.delete("sslmode");
+
+  return parsed.toString();
+}
+
 function createPrismaClient(): PrismaClient {
   const url = process.env.DATABASE_URL;
 
@@ -13,8 +26,7 @@ function createPrismaClient(): PrismaClient {
     throw new Error("DATABASE_URL environment variable is not set");
   }
 
-  // Strip pgbouncer=true from URL as it's a Prisma-only flag not understood by pg driver
-  const cleanUrl = url.replace("&pgbouncer=true", "").replace("?pgbouncer=true", "");
+  const cleanUrl = cleanDatabaseUrl(url);
 
   const pool = new Pool({
     connectionString: cleanUrl,
