@@ -19,24 +19,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   ];
 
   return (
-    <div className="flex min-h-screen bg-black text-white">
+    <div className="flex min-h-screen bg-[#F8F6F0] text-stone-900">
       {/* Sidebar */}
-      <aside className="w-72 border-r border-white/5 bg-zinc-950 flex flex-col justify-between">
+      <aside className="w-72 border-r border-stone-200/80 bg-white flex flex-col justify-between shadow-xs shrink-0">
         <div>
           {/* Logo */}
-          <div className="h-24 mt-4 flex flex-col  items-center px-12 border-b border-white/5">
+          <div className="h-24 mt-4 flex flex-col items-center px-8 border-b border-stone-100">
             <Link href="/" className="flex flex-col w-full">
-            <span className="font-heading text-xl  font-bold tracking-widest text-gold-dark transition-colors hover:text-gold-light sm:text-2xl">
-              HIMMEL
-            </span>
-            <span className="font-heading text-xs uppercase  w-fit ml-8 tracking-wide">
-              fatima zahrae derkaoui
-            </span>
-          </Link>
+              <span className="font-heading text-xl font-bold tracking-widest text-gold-dark transition-colors hover:text-gold sm:text-2xl">
+                HIMMEL
+              </span>
+              <span className="font-semibold text-xs uppercase text-black w-fit ml-8 tracking-wide">
+                fatima zahrae derkaoui
+              </span>
+            </Link>
           </div>
 
           {/* Navigation Links */}
-          <nav className="mt-8 flex flex-col gap-1 px-4">
+          <nav className="mt-8 flex flex-col gap-1.5 px-4">
             {menuItems.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
               return (
@@ -45,8 +45,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   href={item.href}
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium tracking-wide transition-all ${
                     isActive
-                      ? "bg-gold text-black font-semibold"
-                      : "text-zinc-400 hover:bg-zinc-900/50 hover:text-white"
+                      ? "bg-gold text-stone-950 font-semibold shadow-xs"
+                      : "text-stone-600 hover:bg-stone-100 hover:text-stone-900"
                   }`}
                 >
                   {item.label}
@@ -57,10 +57,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
 
         {/* Logout */}
-        <div className="p-4 border-t border-white/5">
+        <div className="p-4 border-t border-stone-100">
           <button
             onClick={() => signOut({ callbackUrl: "/admin/login" })}
-            className="flex w-full items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium tracking-wide text-zinc-400 hover:bg-rose-500/10 hover:text-rose-400 transition-all"
+            className="flex w-full items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium tracking-wide text-stone-500 hover:bg-rose-50 hover:text-rose-600 transition-all cursor-pointer"
           >
             Se déconnecter
           </button>
@@ -68,10 +68,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       </aside>
 
       {/* Main Content Area */}
-      <div className="grow flex flex-col">
+      <div className="grow flex flex-col min-w-0">
         {/* Top Header */}
-        <header className="h-20 border-b border-white/5 bg-zinc-950/40 flex items-center justify-between px-8 backdrop-blur-sm">
-          <h2 className="text-lg font-semibold text-zinc-100">
+        <header className="h-20 border-b border-stone-200/80 bg-white/80 flex items-center justify-between px-8 backdrop-blur-md">
+          <h2 className="text-lg font-semibold text-stone-900">
             {pathname === "/admin/dashboard"
               ? "Tableau de Bord"
               : pathname.startsWith("/admin/produits")
@@ -83,7 +83,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <Link
             href="/"
             target="_blank"
-            className="text-xs font-semibold uppercase tracking-wider text-zinc-400 hover:text-gold transition-colors"
+            className="text-xs font-semibold uppercase tracking-wider text-stone-500 hover:text-gold-dark transition-colors"
           >
             Visiter la boutique &rarr;
           </Link>

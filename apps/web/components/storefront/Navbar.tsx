@@ -41,8 +41,9 @@ function NavLink({
     <Link
       href={href}
       onClick={onNavigate}
-      className={`text-sm font-medium tracking-wide transition-colors hover:text-gold ${active ? "text-gold" : "text-zinc-400"
-        } ${className}`}
+      className={`text-sm font-medium tracking-wide transition-colors hover:text-gold-dark ${
+        active ? "text-gold-dark font-semibold" : "text-stone-600"
+      } ${className}`}
     >
       {label}
     </Link>
@@ -73,20 +74,18 @@ export default function Navbar() {
   const closeMenu = useCallback(() => setMenuOpen(false), []);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-stone-200/80 bg-cream/90 backdrop-blur-md shadow-xs">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-8">
         {/* Logo + desktop nav */}
         <div className="flex min-w-0 items-center gap-6 md:gap-8">
           <Link href="/" className="flex flex-col">
-            <span className="font-heading text-xl  font-bold tracking-widest text-gold-dark transition-colors hover:text-gold-light sm:text-2xl">
+            <span className="font-heading text-xl font-bold tracking-widest text-gold-dark transition-colors hover:text-gold sm:text-2xl">
               HIMMEL
             </span>
-            <span className="font-heading text-xs uppercase  w-fit ml-8 tracking-wide">
+            <span className="font-semibold text-xs uppercase text-black w-fit ml-8 tracking-wide">
               fatima zahrae derkaoui
             </span>
           </Link>
-
-
         </div>
         <nav className="hidden items-center gap-8 md:flex" aria-label="Navigation principale">
           {navLinks.map((link) => (
@@ -102,14 +101,14 @@ export default function Navbar() {
         <div className="flex items-center gap-3 sm:gap-6">
           <Link
             href="/admin/dashboard"
-            className="hidden text-xs font-semibold uppercase tracking-wider text-zinc-400 transition-colors hover:text-gold sm:block"
+            className="hidden text-xs font-semibold uppercase tracking-wider text-stone-500 transition-colors hover:text-gold-dark sm:block"
           >
             Admin
           </Link>
 
           <Link
             href="/panier"
-            className="group relative flex h-9 w-9 items-center justify-center rounded-full border border-zinc-800 bg-zinc-950 text-white transition-all duration-300 hover:border-gold hover:bg-zinc-900 sm:h-10 sm:w-10"
+            className="group relative flex h-9 w-9 items-center justify-center rounded-full border border-stone-200 bg-white text-stone-800 shadow-sm transition-all duration-300 hover:border-gold hover:bg-amber-50/50 sm:h-10 sm:w-10"
             aria-label={`Panier${mounted && itemCount > 0 ? `, ${itemCount} article${itemCount > 1 ? "s" : ""}` : ""}`}
           >
             <svg
@@ -118,7 +117,7 @@ export default function Navbar() {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="h-5 w-5 transition-colors group-hover:text-gold"
+              className="h-5 w-5 transition-colors group-hover:text-gold-dark"
               aria-hidden="true"
             >
               <path
@@ -128,7 +127,7 @@ export default function Navbar() {
               />
             </svg>
             {mounted && itemCount > 0 && (
-              <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-gold text-[10px] font-bold text-black ring-2 ring-black">
+              <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-gold text-[10px] font-bold text-stone-950 ring-2 ring-white">
                 {itemCount}
               </span>
             )}
@@ -136,7 +135,7 @@ export default function Navbar() {
 
           <button
             type="button"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-800 bg-zinc-950 text-zinc-400 transition-colors hover:border-gold hover:text-gold md:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-200 bg-white text-stone-700 transition-colors hover:border-gold hover:text-gold-dark md:hidden"
             aria-expanded={menuOpen}
             aria-controls="mobile-nav"
             aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
@@ -158,8 +157,9 @@ export default function Navbar() {
       {/* Mobile menu */}
       <div
         id="mobile-nav"
-        className={`overflow-hidden border-t border-white/10 bg-black/95 backdrop-blur-md transition-[max-height,opacity] duration-300 ease-in-out md:hidden ${menuOpen ? "max-h-[calc(100dvh-4rem)] opacity-100" : "max-h-0 opacity-0"
-          }`}
+        className={`overflow-hidden border-t border-stone-200/80 bg-cream/98 backdrop-blur-md transition-[max-height,opacity] duration-300 ease-in-out md:hidden ${
+          menuOpen ? "max-h-[calc(100dvh-4rem)] opacity-100" : "max-h-0 opacity-0"
+        }`}
         aria-hidden={!menuOpen}
       >
         <nav className="mx-auto flex max-w-7xl flex-col px-4 py-4 sm:px-8" aria-label="Navigation mobile">
@@ -170,13 +170,13 @@ export default function Navbar() {
               label={link.label}
               active={link.isActive(pathname)}
               onNavigate={closeMenu}
-              className="border-b border-white/5 py-4 text-base last:border-b-0"
+              className="border-b border-stone-200/60 py-4 text-base last:border-b-0"
             />
           ))}
           <Link
             href="/admin/dashboard"
             onClick={closeMenu}
-            className="mt-2 border-t border-white/5 py-4 text-xs font-semibold uppercase tracking-wider text-zinc-400 transition-colors hover:text-gold"
+            className="mt-2 border-t border-stone-200/60 py-4 text-xs font-semibold uppercase tracking-wider text-stone-600 transition-colors hover:text-gold-dark"
           >
             Admin
           </Link>

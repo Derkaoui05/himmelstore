@@ -64,7 +64,7 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
       {/* Left: Gallery */}
       <div className="flex flex-col gap-4">
         {/* Main Image */}
-        <div className="relative aspect-square w-full overflow-hidden rounded-xl border border-white/5 bg-zinc-950">
+        <div className="relative aspect-square w-full overflow-hidden rounded-xl border border-stone-200/80 bg-white shadow-xs">
           <Image
             src={activeImage}
             alt={product.name}
@@ -81,8 +81,8 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
               <button
                 key={idx}
                 onClick={() => setActiveImage(img)}
-                className={`relative aspect-square w-20 shrink-0 overflow-hidden rounded-lg border transition-all ${
-                  activeImage === img ? "border-gold" : "border-zinc-800 hover:border-zinc-600"
+                className={`relative aspect-square w-20 shrink-0 overflow-hidden rounded-lg border bg-white transition-all cursor-pointer ${
+                  activeImage === img ? "border-gold ring-2 ring-gold/30" : "border-stone-200 hover:border-stone-300"
                 }`}
               >
                 <Image
@@ -100,37 +100,37 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
       {/* Right: Info Panel */}
       <div className="flex flex-col">
         {/* Breadcrumb & Gender */}
-        <div className="flex items-center gap-3 text-xs uppercase tracking-widest text-zinc-500">
-          <span>{product.brand}</span>
-          <span className="h-1 w-1 rounded-full bg-zinc-700" />
+        <div className="flex items-center gap-3 text-xs uppercase tracking-widest text-stone-400 font-medium">
+          <span className="text-stone-600">{product.brand}</span>
+          <span className="h-1 w-1 rounded-full bg-stone-300" />
           <span>{genderLabels[product.gender]}</span>
         </div>
 
         {/* Product Title */}
-        <h1 className="mt-4 font-heading text-3xl font-light text-white sm:text-4xl leading-tight">
+        <h1 className="mt-4 font-heading text-3xl font-light text-stone-900 sm:text-4xl leading-tight">
           {product.name}
         </h1>
 
         {/* Concentration */}
         {product.concentration && (
-          <div className="mt-2 text-sm font-semibold tracking-wide text-gold">
+          <div className="mt-2 text-sm font-semibold tracking-wide text-gold-dark">
             {product.concentration}
           </div>
         )}
 
         {/* Pricing */}
-        <div className="mt-6 flex items-baseline gap-4 border-y border-white/5 py-4">
-          <span className="text-3xl font-bold text-gold">
+        <div className="mt-6 flex items-baseline gap-4 border-y border-stone-200/80 py-4">
+          <span className="text-3xl font-bold text-gold-dark">
             {Number(selectedVariant.price).toLocaleString("fr-FR")} DH
           </span>
-          <span className="text-xs text-zinc-500 uppercase tracking-wider">
+          <span className="text-xs text-stone-500 uppercase tracking-wider">
             TVA Incluse / Livraison Gratuite
           </span>
         </div>
 
         {/* Variant Selectors (Sizes) */}
         <div className="mt-8">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-stone-700">
             Sélectionner la Taille
           </h3>
           <div className="mt-3 flex flex-wrap gap-3">
@@ -138,10 +138,10 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
               <button
                 key={v.id}
                 onClick={() => setSelectedVariant(v)}
-                className={`rounded-lg border px-5 py-3 text-sm font-medium tracking-wide transition-all ${
+                className={`rounded-lg border px-5 py-3 text-sm font-medium tracking-wide transition-all cursor-pointer ${
                   selectedVariant.id === v.id
-                    ? "border-gold bg-gold/10 text-gold"
-                    : "border-zinc-800 bg-zinc-950 text-zinc-400 hover:border-zinc-600 hover:text-white"
+                    ? "border-gold bg-gold/15 text-gold-dark font-semibold shadow-xs"
+                    : "border-stone-200 bg-[#FAF8F5] text-stone-700 hover:border-stone-300 hover:bg-white"
                 }`}
               >
                 {v.size} — {Number(v.price).toLocaleString("fr-FR")} DH
@@ -157,7 +157,7 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
               selectedVariant.stock > 0 ? "bg-emerald-500 animate-pulse" : "bg-rose-500"
             }`}
           />
-          <span className="text-xs font-medium text-zinc-400">
+          <span className="text-xs font-medium text-stone-600">
             {selectedVariant.stock > 0
               ? `En stock (${selectedVariant.stock} disponibles)`
               : "Rupture de stock"}
@@ -168,12 +168,12 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
         <button
           onClick={handleAddToCart}
           disabled={selectedVariant.stock <= 0}
-          className={`mt-8 flex h-14 w-full items-center justify-center rounded-full text-sm font-semibold uppercase tracking-widest transition-all duration-300 ${
+          className={`mt-8 flex h-14 w-full items-center justify-center rounded-full text-sm font-semibold uppercase tracking-widest transition-all duration-300 cursor-pointer shadow-md ${
             selectedVariant.stock > 0
               ? isAdded
                 ? "bg-emerald-600 text-white cursor-default"
-                : "bg-gold text-black hover:bg-gold-light hover:scale-[1.02] active:scale-95"
-              : "bg-zinc-800 text-zinc-500 cursor-not-allowed"
+                : "bg-gold text-stone-950 hover:bg-gold-light hover:scale-[1.02] active:scale-95"
+              : "bg-stone-200 text-stone-400 cursor-not-allowed shadow-none"
           }`}
         >
           {selectedVariant.stock > 0
@@ -184,11 +184,11 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
         </button>
 
         {/* Description */}
-        <div className="mt-10 border-t border-white/5 pt-8">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-white">
+        <div className="mt-10 border-t border-stone-200/80 pt-8">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-stone-900">
             Description
           </h3>
-          <p className="mt-4 text-sm leading-relaxed text-zinc-400 whitespace-pre-line">
+          <p className="mt-4 text-sm leading-relaxed text-stone-600 whitespace-pre-line">
             {product.description}
           </p>
         </div>

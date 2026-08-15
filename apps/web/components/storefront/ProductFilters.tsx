@@ -75,10 +75,10 @@ export default function ProductFilters({
   };
 
   return (
-    <div className="flex flex-col gap-8 rounded-xl border border-white/5 bg-zinc-950/40 p-6 backdrop-blur-sm">
+    <div className="flex flex-col gap-8 rounded-xl border border-stone-200/80 bg-white p-6 shadow-xs">
       {/* Search Input */}
       <div>
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-white">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-stone-900">
           Rechercher
         </h3>
         <div className="mt-3 relative">
@@ -88,7 +88,7 @@ export default function ProductFilters({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && applyFilters({ search })}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-sm text-white placeholder-zinc-500 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+            className="w-full rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
           />
           {search && (
             <button
@@ -96,7 +96,7 @@ export default function ProductFilters({
                 setSearch("");
                 applyFilters({ search: "" });
               }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700 text-lg"
             >
               &times;
             </button>
@@ -106,7 +106,7 @@ export default function ProductFilters({
 
       {/* Gender Filters */}
       <div>
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-white">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-stone-900">
           Genre
         </h3>
         <div className="mt-3 flex flex-wrap gap-2">
@@ -120,8 +120,8 @@ export default function ProductFilters({
               }}
               className={`rounded-lg border px-4 py-2 text-xs font-medium tracking-wide transition-all ${
                 gender === g
-                  ? "border-gold bg-gold text-black"
-                  : "border-zinc-800 bg-zinc-900 text-zinc-400 hover:border-zinc-700 hover:text-white"
+                  ? "border-gold bg-gold text-stone-950 font-semibold shadow-xs"
+                  : "border-stone-200 bg-[#FAF8F5] text-stone-600 hover:border-stone-300 hover:text-stone-900 hover:bg-white"
               }`}
             >
               {g === "HOMME" ? "Homme" : g === "FEMME" ? "Femme" : "Unisexe"}
@@ -133,7 +133,7 @@ export default function ProductFilters({
       {/* Category Filters */}
       {categories && categories.length > 0 && (
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-white">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-stone-900">
             Catégorie
           </h3>
           <div className="mt-3 flex flex-col gap-2">
@@ -147,8 +147,8 @@ export default function ProductFilters({
                 }}
                 className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm transition-all ${
                   category === cat.slug
-                    ? "bg-gold/10 text-gold font-medium"
-                    : "text-zinc-400 hover:bg-zinc-900 hover:text-white"
+                    ? "bg-gold/15 text-gold-dark font-semibold"
+                    : "text-stone-600 hover:bg-stone-50 hover:text-stone-900"
                 }`}
               >
                 <span>{cat.name}</span>
@@ -176,7 +176,7 @@ export default function ProductFilters({
 
       {/* Brand Filters */}
       <div>
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-white">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-stone-900">
           Marque
         </h3>
         <div className="mt-3 flex flex-col gap-1 max-h-48 overflow-y-auto pr-1">
@@ -190,8 +190,8 @@ export default function ProductFilters({
               }}
               className={`flex items-center justify-between rounded-lg px-3 py-1.5 text-sm transition-all ${
                 brand === b
-                  ? "text-gold font-medium"
-                  : "text-zinc-400 hover:text-white"
+                  ? "text-gold-dark font-semibold bg-amber-50/50"
+                  : "text-stone-600 hover:text-stone-900 hover:bg-stone-50"
               }`}
             >
               <span>{b}</span>
@@ -203,7 +203,7 @@ export default function ProductFilters({
 
       {/* Price Range */}
       <div>
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-white">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-stone-900">
           Prix (DH)
         </h3>
         <div className="mt-3 flex items-center gap-3">
@@ -212,20 +212,20 @@ export default function ProductFilters({
             placeholder="Min"
             value={priceMin}
             onChange={(e) => setPriceMin(e.target.value)}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-2 text-xs text-white placeholder-zinc-600 focus:border-gold focus:outline-none"
+            className="w-full rounded-lg border border-stone-200 bg-[#FAF8F5] px-3 py-2 text-xs text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none"
           />
-          <span className="text-zinc-600 text-xs">—</span>
+          <span className="text-stone-400 text-xs">—</span>
           <input
             type="number"
             placeholder="Max"
             value={priceMax}
             onChange={(e) => setPriceMax(e.target.value)}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-900 px-3 py-2 text-xs text-white placeholder-zinc-600 focus:border-gold focus:outline-none"
+            className="w-full rounded-lg border border-stone-200 bg-[#FAF8F5] px-3 py-2 text-xs text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none"
           />
         </div>
         <button
           onClick={() => applyFilters({ priceMin, priceMax })}
-          className="mt-3 w-full rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs text-zinc-300 py-2 hover:text-white transition-colors"
+          className="mt-3 w-full rounded-lg bg-stone-100 hover:bg-stone-200/70 border border-stone-200 text-xs text-stone-800 font-medium py-2 transition-colors cursor-pointer"
         >
           Appliquer le prix
         </button>
@@ -234,7 +234,7 @@ export default function ProductFilters({
       {/* Reset Button */}
       <button
         onClick={handleReset}
-        className="mt-4 w-full rounded-lg border border-zinc-800 hover:border-zinc-700 py-2.5 text-xs font-medium text-zinc-400 hover:text-white transition-colors"
+        className="mt-2 w-full rounded-lg border border-stone-200 hover:border-stone-300 hover:bg-stone-50 py-2.5 text-xs font-medium text-stone-600 hover:text-stone-900 transition-colors cursor-pointer"
       >
         Réinitialiser les filtres
       </button>
