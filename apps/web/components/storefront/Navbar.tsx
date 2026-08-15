@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCartStore } from "@/lib/store";
 import { useState, useEffect, useCallback } from "react";
+import { useSession, signOut } from "next-auth/react";
 
 const navLinks = [
   { href: "/", label: "Accueil", isActive: (pathname: string) => pathname === "/" },
@@ -52,6 +53,7 @@ function NavLink({
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { data: session, status } = useSession();
   const itemCount = useCartStore((state) => state.getItemCount());
   const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -98,14 +100,33 @@ export default function Navbar() {
           ))}
         </nav>
         {/* Actions */}
-        <div className="flex items-center gap-3 sm:gap-6">
-          <Link
-            href="/admin/dashboard"
-            className="hidden text-xs font-semibold uppercase tracking-wider text-stone-500 transition-colors hover:text-gold-dark sm:block"
-          >
-            Admin
-          </Link>
+        <div className="flex items-center gap-3 sm:gap-4">
+          {/* Customer Auth Link (Desktop) */}
+          {status === "authenticated" ? (
+            <div className="hidden sm:flex items-center gap-2">
+              <Link
+                href="/compte"
+                className="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-stone-800 shadow-2xs hover:border-gold hover:text-gold-dark transition-all"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 text-gold-dark">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+                <span>Mon Compte</span>
+              </Link>
+            </div>
+          ) : (
+            <Link
+              href="/connexion"
+              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-stone-700 hover:text-gold-dark transition-colors px-2 py-1"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+              </svg>
+              <span>Connexion</span>
+            </Link>
+          )}
 
+          {/* Cart Button */}
           <Link
             href="/panier"
             className="group relative flex h-9 w-9 items-center justify-center rounded-full border border-stone-200 bg-white text-stone-800 shadow-sm transition-all duration-300 hover:border-gold hover:bg-amber-50/50 sm:h-10 sm:w-10"
@@ -133,6 +154,7 @@ export default function Navbar() {
             )}
           </Link>
 
+          {/* Mobile menu toggle */}
           <button
             type="button"
             className="flex h-9 w-9 items-center justify-center rounded-full border border-stone-200 bg-white text-stone-700 transition-colors hover:border-gold hover:text-gold-dark md:hidden"
@@ -170,18 +192,45 @@ export default function Navbar() {
               label={link.label}
               active={link.isActive(pathname)}
               onNavigate={closeMenu}
-              className="border-b border-stone-200/60 py-4 text-base last:border-b-0"
+              className="border-b border-stone-200/60 py-3.5 text-base"
             />
           ))}
-          <Link
-            href="/admin/dashboard"
-            onClick={closeMenu}
-            className="mt-2 border-t border-stone-200/60 py-4 text-xs font-semibold uppercase tracking-wider text-stone-600 transition-colors hover:text-gold-dark"
-          >
-            Admin
-          </Link>
+
+          {status === "authenticated" ? (
+            <>
+              <Link
+                href="/compte"
+                onClick={closeMenu}
+                className="border-b border-stone-200/60 py-3.5 text-sm font-semibold text-stone-900 flex items-center justify-between"
+              >
+                <span>Mon Compte & Mes Commandes</span>
+                <span className="text-gold-dark">&rarr;</span>
+              </Link>
+              <button
+                onClick={() => {
+                  closeMenu();
+                  signOut({ callbackUrl: "/" });
+                }}
+                className="py-3.5 text-left text-sm font-semibold text-rose-600"
+              >
+                Se déconnecter
+              </button>
+            </>
+          ) : (
+            <Link
+              href="/connexion"
+              onClick={closeMenu}
+              className="border-b border-stone-200/60 py-3.5 text-sm font-semibold text-stone-900 flex items-center justify-between"
+            >
+              <span>Se connecter / S'inscrire</span>
+              <span className="text-gold-dark">&rarr;</span>
+            </Link>
+          )}
+
+
         </nav>
       </div>
     </header>
   );
 }
+

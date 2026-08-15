@@ -77,3 +77,31 @@ export const UpdateOrderStatusSchema = z.object({
   status: OrderStatusSchema,
 });
 export type UpdateOrderStatus = z.infer<typeof UpdateOrderStatusSchema>;
+
+// Customer Registration Schema
+export const RegisterCustomerInputSchema = z.object({
+  name: z.string().min(2, "Le nom complet doit contenir au moins 2 caractères"),
+  email: z.string().email("Adresse email invalide"),
+  password: z.string().min(6, "Le mot de passe doit contenir au moins 6 caractères"),
+  phone: z.string().regex(/^(?:\+212|0)[5-7]\d{8}$/, "Numéro de téléphone marocain invalide (ex: 0612345678)").optional().or(z.literal("")),
+  city: z.string().min(2, "La ville doit contenir au moins 2 caractères").optional().or(z.literal("")),
+  address: z.string().min(5, "L'adresse doit contenir au moins 5 caractères").optional().or(z.literal("")),
+});
+export type RegisterCustomerInput = z.infer<typeof RegisterCustomerInputSchema>;
+
+// Customer Login Schema
+export const LoginInputSchema = z.object({
+  email: z.string().email("Adresse email invalide"),
+  password: z.string().min(1, "Le mot de passe est requis"),
+});
+export type LoginInput = z.infer<typeof LoginInputSchema>;
+
+// Customer Profile Update Schema
+export const UpdateCustomerProfileSchema = z.object({
+  name: z.string().min(2, "Le nom complet doit contenir au moins 2 caractères"),
+  phone: z.string().regex(/^(?:\+212|0)[5-7]\d{8}$/, "Numéro de téléphone marocain invalide").optional().or(z.literal("")),
+  city: z.string().min(2, "La ville doit contenir au moins 2 caractères").optional().or(z.literal("")),
+  address: z.string().min(5, "L'adresse doit contenir au moins 5 caractères").optional().or(z.literal("")),
+});
+export type UpdateCustomerProfile = z.infer<typeof UpdateCustomerProfileSchema>;
+

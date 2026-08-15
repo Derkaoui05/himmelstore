@@ -1,17 +1,19 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { publicProcedure, protectedProcedure, router } from "../trpc";
+import { publicProcedure, userProcedure, protectedProcedure, router } from "../trpc";
 import { CheckoutInputSchema, OrderStatusSchema, UpdateOrderStatusSchema } from "@himmel/types";
 import { Prisma } from "@himmel/db";
 
 export const orderRouter = router({
   /**
-   * Guest Checkout - Creates an order and decrements variant stocks.
-   * Calculates the total server-side to prevent client tampering.
+   * Create an order - Requires an authenticated user session.
+   * Decrements variant stocks and calculates the total server-side.
    */
-  create: publicProcedure
+  create: userProcedure
     .input(CheckoutInputSchema)
     .mutation(async ({ ctx, input }) => {
+      const userId = ctx.session.user.id;
+
       return ctx.db.$transaction(async (tx) => {
         let total = new Prisma.Decimal(0);
         const orderItemsData = [];
@@ -109,6 +111,7 @@ export const orderRouter = router({
         const order = await tx.order.create({
           data: {
             orderNumber,
+            userId,
             customerName: input.customerName,
             phone: input.phone,
             city: input.city,
@@ -132,8 +135,140 @@ export const orderRouter = router({
           },
         });
 
+        // Optionally update user's profile with delivery info if missing
+        if (ctx.session.user.role === "USER") {
+          await tx.user.update({
+            where: { id: userId },
+            data: {
+              phone: input.phone,
+              city: input.city,
+              address: input.address,
+            },
+          }).catch(() => null);
+        }
+
         return order;
       });
+    }),
+
+  /**
+   * Get all orders placed by the current logged-in customer.
+   */
+  myOrders: userProcedure
+    .input(
+      z
+        .object({
+          page: z.number().default(1),
+          limit: z.number().default(10),
+        })
+        .optional()
+    )
+    .query(async ({ ctx, input }) => {
+      const page = input?.page || 1;
+      const limit = input?.limit || 10;
+      const userId = ctx.session.user.id;
+
+      const [orders, totalCount] = await Promise.all([
+        ctx.db.order.findMany({
+          where: { userId },
+          include: {
+            items: {
+              include: {
+                variant: {
+                  include: {
+                    product: true,
+                  },
+                },
+              },
+            },
+          },
+          skip: (page - 1) * limit,
+          take: limit,
+          orderBy: {
+            createdAt: "desc",
+          },
+        }),
+        ctx.db.order.count({ where: { userId } }),
+      ]);
+
+      return {
+        orders,
+        totalCount,
+        totalPages: Math.ceil(totalCount / limit),
+        currentPage: page,
+      };
+    }),
+
+  /**
+   * Track an order by orderNumber.
+   * Returns order details and timeline progression.
+   */
+  track: publicProcedure
+    .input(
+      z.object({
+        orderNumber: z.string().min(1, "Numéro de commande requis"),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const order = await ctx.db.order.findUnique({
+        where: { orderNumber: input.orderNumber.trim().toUpperCase() },
+        include: {
+          items: {
+            include: {
+              variant: {
+                include: {
+                  product: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (!order) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Aucune commande trouvée avec ce numéro.",
+        });
+      }
+
+      // Compute tracking steps status
+      const steps = [
+        {
+          key: "PENDING",
+          title: "Commande Reçue",
+          description: "Votre commande a bien été enregistrée dans notre système.",
+          completed: true,
+          current: order.status === "PENDING",
+        },
+        {
+          key: "CONFIRMED",
+          title: "Commande Confirmée",
+          description: "Notre service client a validé votre commande.",
+          completed: ["CONFIRMED", "SHIPPED", "DELIVERED"].includes(order.status),
+          current: order.status === "CONFIRMED",
+        },
+        {
+          key: "SHIPPED",
+          title: "En cours de Livraison",
+          description: "Le livreur a pris en charge votre colis.",
+          completed: ["SHIPPED", "DELIVERED"].includes(order.status),
+          current: order.status === "SHIPPED",
+        },
+        {
+          key: "DELIVERED",
+          title: "Commande Livrée",
+          description: "Le colis a été remis en mains propres.",
+          completed: order.status === "DELIVERED",
+          current: order.status === "DELIVERED",
+        },
+      ];
+
+      return {
+        order,
+        steps,
+        isCancelled: order.status === "CANCELLED",
+      };
     }),
 
   /**
@@ -275,3 +410,4 @@ export const orderRouter = router({
       });
     }),
 });
+
