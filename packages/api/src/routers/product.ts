@@ -220,6 +220,9 @@ export const productRouter = router({
           gender: input.gender,
           concentration: input.concentration,
           images: input.images,
+          topNotes: input.topNotes || [],
+          heartNotes: input.heartNotes || [],
+          baseNotes: input.baseNotes || [],
           featured: input.featured,
           active: input.active,
           categoryId: input.categoryId,
@@ -231,7 +234,7 @@ export const productRouter = router({
               sku: v.sku,
             })),
           },
-        },
+        } as any,
         include: {
           variants: true,
         },
@@ -287,10 +290,13 @@ export const productRouter = router({
             gender: productData.gender,
             concentration: productData.concentration,
             images: productData.images,
+            topNotes: productData.topNotes || [],
+            heartNotes: productData.heartNotes || [],
+            baseNotes: productData.baseNotes || [],
             featured: productData.featured,
             active: productData.active,
             categoryId: productData.categoryId,
-          },
+          } as any,
         });
 
         // Manage variants

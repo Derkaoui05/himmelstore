@@ -19,6 +19,9 @@ model Product {
   gender        Gender
   concentration String?
   images        String[]
+  topNotes      String[]  @default([])
+  heartNotes    String[]  @default([])
+  baseNotes     String[]  @default([])
   featured      Boolean   @default(false)
   active        Boolean   @default(true)
   categoryId    String

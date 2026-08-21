@@ -31,7 +31,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
     reset,
     formState: { errors, isSubmitting },
   } = useForm<ProductInput>({
-    resolver: zodResolver(ProductInputSchema),
+    resolver: zodResolver(ProductInputSchema) as any,
     defaultValues: initialData
       ? {
           name: initialData.name,
@@ -41,6 +41,9 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
           gender: initialData.gender,
           concentration: initialData.concentration || "",
           images: initialData.images || [],
+          topNotes: initialData.topNotes || [],
+          heartNotes: initialData.heartNotes || [],
+          baseNotes: initialData.baseNotes || [],
           featured: initialData.featured,
           active: initialData.active,
           categoryId: initialData.categoryId,
@@ -60,6 +63,9 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
           gender: "HOMME",
           concentration: "Eau de Parfum",
           images: [],
+          topNotes: [],
+          heartNotes: [],
+          baseNotes: [],
           featured: false,
           active: true,
           categoryId: "",
@@ -78,6 +84,9 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
         gender: initialData.gender,
         concentration: initialData.concentration || "",
         images: initialData.images || [],
+        topNotes: initialData.topNotes || [],
+        heartNotes: initialData.heartNotes || [],
+        baseNotes: initialData.baseNotes || [],
         featured: initialData.featured,
         active: initialData.active,
         categoryId: initialData.categoryId,
@@ -255,6 +264,61 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
           className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
         />
         {errors.description && <span className="text-xs text-rose-600">{errors.description.message}</span>}
+      </div>
+
+      {/* Pyramide Olfactive Inputs */}
+      <div className="flex flex-col gap-4 border-t border-stone-200/80 pt-6">
+        <div>
+          <h3 className="text-sm font-semibold text-stone-900 uppercase tracking-wider">Pyramide Olfactive</h3>
+          <p className="text-xs text-stone-500">Séparez les notes par des virgules (ex: Bergamote, Poivre rose, Citron)</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Top Notes */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold uppercase tracking-wider text-stone-700">Notes de Tête (5-15 min)</label>
+            <input
+              type="text"
+              placeholder="Ex: Bergamote, Citron, Menthe"
+              defaultValue={(initialData?.topNotes || []).join(", ")}
+              onChange={(e) => {
+                const arr = e.target.value.split(",").map((s) => s.trim()).filter(Boolean);
+                setValue("topNotes", arr, { shouldValidate: true });
+              }}
+              className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+            />
+          </div>
+
+          {/* Heart Notes */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold uppercase tracking-wider text-stone-700">Notes de Cœur (2-4 h)</label>
+            <input
+              type="text"
+              placeholder="Ex: Lavande, Jasmin, Fleur d'oranger"
+              defaultValue={(initialData?.heartNotes || []).join(", ")}
+              onChange={(e) => {
+                const arr = e.target.value.split(",").map((s) => s.trim()).filter(Boolean);
+                setValue("heartNotes", arr, { shouldValidate: true });
+              }}
+              className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+            />
+          </div>
+
+          {/* Base Notes */}
+          <div className="flex flex-col gap-1.5">
+            <label className="text-xs font-semibold uppercase tracking-wider text-stone-700">Notes de Fond (4-8+ h)</label>
+            <input
+              type="text"
+              placeholder="Ex: Vanille, Cèdre, Bois de santal, Ambre"
+              defaultValue={(initialData?.baseNotes || []).join(", ")}
+              onChange={(e) => {
+                const arr = e.target.value.split(",").map((s) => s.trim()).filter(Boolean);
+                setValue("baseNotes", arr, { shouldValidate: true });
+              }}
+              className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+            />
+          </div>
+        </div>
       </div>
 
       {/* Flags: Featured & Active */}

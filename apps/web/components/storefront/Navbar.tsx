@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCartStore } from "@/lib/store";
+import { useWishlistStore } from "@/lib/wishlistStore";
 import { useState, useEffect, useCallback } from "react";
 import { useSession, signOut } from "next-auth/react";
 
@@ -55,6 +56,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const { data: session, status } = useSession();
   const itemCount = useCartStore((state) => state.getItemCount());
+  const wishlistCount = useWishlistStore((state) => state.getItemCount());
   const [mounted, setMounted] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -100,7 +102,7 @@ export default function Navbar() {
           ))}
         </nav>
         {/* Actions */}
-        <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex items-center gap-2.5 sm:gap-3">
           {/* Customer Auth Link (Desktop) */}
           {status === "authenticated" ? (
             <div className="hidden sm:flex items-center gap-2">
@@ -125,6 +127,34 @@ export default function Navbar() {
               <span>Connexion</span>
             </Link>
           )}
+
+          {/* Wishlist Button */}
+          <Link
+            href="/favoris"
+            className="group relative flex h-9 w-9 items-center justify-center rounded-full border border-stone-200 bg-white text-stone-800 shadow-sm transition-all duration-300 hover:border-gold hover:bg-rose-50/40 sm:h-10 sm:w-10"
+            aria-label={`Favoris${mounted && wishlistCount > 0 ? `, ${wishlistCount} produit${wishlistCount > 1 ? "s" : ""}` : ""}`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="h-5 w-5 transition-colors group-hover:text-rose-600"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+              />
+            </svg>
+            {mounted && wishlistCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-rose-500 text-[10px] font-bold text-white ring-2 ring-white animate-in fade-in zoom-in duration-200">
+                {wishlistCount}
+              </span>
+            )}
+          </Link>
 
           {/* Cart Button */}
           <Link
@@ -196,6 +226,24 @@ export default function Navbar() {
             />
           ))}
 
+          <Link
+            href="/favoris"
+            onClick={closeMenu}
+            className="border-b border-stone-200/60 py-3.5 text-sm font-semibold text-stone-900 flex items-center justify-between"
+          >
+            <span className="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="h-4 w-4 text-rose-500">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+              </svg>
+              Mes Favoris
+            </span>
+            {mounted && wishlistCount > 0 && (
+              <span className="rounded-full bg-rose-100 text-rose-700 px-2 py-0.5 text-xs font-bold">
+                {wishlistCount}
+              </span>
+            )}
+          </Link>
+
           {status === "authenticated" ? (
             <>
               <Link
@@ -226,8 +274,6 @@ export default function Navbar() {
               <span className="text-gold-dark">&rarr;</span>
             </Link>
           )}
-
-
         </nav>
       </div>
     </header>

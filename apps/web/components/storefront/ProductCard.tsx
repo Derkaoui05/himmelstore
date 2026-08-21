@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { useWishlistStore } from "@/lib/wishlistStore";
 
 interface Variant {
   id: string;
@@ -24,9 +25,26 @@ interface Product {
 
 export default function ProductCard({ product }: { product: Product }) {
   const [isHovered, setIsHovered] = useState(false);
+  const toggleWishlist = useWishlistStore((state) => state.toggleItem);
+  const isInWishlist = useWishlistStore((state) => state.isInWishlist(product.id));
 
   const prices = product.variants.map((v) => Number(v.price));
   const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
+
+  const handleWishlistClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleWishlist({
+      id: product.id,
+      name: product.name,
+      slug: product.slug,
+      brand: product.brand,
+      image: product.images[0] || "/placeholder-perfume.jpg",
+      minPrice,
+      gender: product.gender,
+      concentration: product.concentration,
+    });
+  };
 
   const genderLabels = {
     HOMME: "Homme",
@@ -53,12 +71,40 @@ export default function ProductCard({ product }: { product: Product }) {
           className="object-cover transition-all duration-500 group-hover:scale-105"
         />
 
+        {/* Wishlist Button on Card */}
+        <button
+          type="button"
+          onClick={handleWishlistClick}
+          className={`absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full border backdrop-blur-md transition-all duration-300 cursor-pointer shadow-xs ${
+            isInWishlist
+              ? "border-rose-300 bg-white text-rose-600 opacity-100"
+              : "border-stone-200/70 bg-white/90 text-stone-500 hover:border-gold hover:text-gold-dark opacity-80 group-hover:opacity-100"
+          }`}
+          title={isInWishlist ? "Retirer des favoris" : "Ajouter aux favoris"}
+          aria-label="Favoris"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill={isInWishlist ? "currentColor" : "none"}
+            stroke="currentColor"
+            strokeWidth={isInWishlist ? "0" : "1.5"}
+            className={`h-4 w-4 transition-transform ${isInWishlist ? "scale-110" : "hover:scale-110"}`}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+            />
+          </svg>
+        </button>
+
         <span className="absolute left-3 top-3 rounded-full bg-white/95 border border-stone-200/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-stone-700 shadow-xs backdrop-blur-sm">
           {genderLabels[product.gender]}
         </span>
 
         {product.concentration && (
-          <span className="absolute right-3 top-3 rounded-full border border-gold/30 bg-gold/15 px-3 py-1 text-[10px] font-semibold text-gold-dark backdrop-blur-sm">
+          <span className="absolute left-3 bottom-3 rounded-full border border-gold/30 bg-gold/15 px-3 py-1 text-[10px] font-semibold text-gold-dark backdrop-blur-sm">
             {product.concentration}
           </span>
         )}

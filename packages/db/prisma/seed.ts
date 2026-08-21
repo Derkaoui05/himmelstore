@@ -89,6 +89,9 @@ async function main() {
       concentration: "Eau de Parfum",
       featured: true,
       categoryId: boise.id,
+      topNotes: ["Pamplemousse", "Citron", "Menthe", "Poivre rose"],
+      heartNotes: ["Gingembre", "Noix de muscade", "Jasmin", "Iso E Super"],
+      baseNotes: ["Encens", "Vétiver", "Cèdre", "Bois de santal", "Patchouli"],
       images: [
         "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=600&q=80",
         "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=600&q=80"
@@ -109,6 +112,9 @@ async function main() {
       concentration: "Eau de Toilette",
       featured: true,
       categoryId: frais.id,
+      topNotes: ["Bergamote de Calabre", "Poivre"],
+      heartNotes: ["Poivre du Sichuan", "Lavande", "Poivre rose", "Vétiver", "Géranium"],
+      baseNotes: ["Ambroxan", "Cèdre", "Ladanum"],
       images: [
         "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=600&q=80",
       ],
@@ -128,6 +134,9 @@ async function main() {
       concentration: "Eau de Parfum",
       featured: true,
       categoryId: floral.id,
+      topNotes: ["Lavande", "Mandarine", "Cassis", "Petit-grain"],
+      heartNotes: ["Fleur d'oranger", "Jasmin Sambac", "Lavande française"],
+      baseNotes: ["Vanille de Madagascar", "Musc", "Cèdre", "Ambre gris"],
       images: [
         "https://images.unsplash.com/photo-1588405748373-122b2321bc31?auto=format&fit=crop&w=600&q=80",
       ],
@@ -148,6 +157,9 @@ async function main() {
       concentration: "Eau de Parfum",
       featured: false,
       categoryId: floral.id,
+      topNotes: ["Cassis", "Poire"],
+      heartNotes: ["Iris", "Jasmin", "Fleur d'oranger"],
+      baseNotes: ["Praliné", "Vanille", "Patchouli", "Fève tonka"],
       images: [
         "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=600&q=80",
       ],
@@ -167,6 +179,9 @@ async function main() {
       concentration: "Eau de Parfum",
       featured: true,
       categoryId: oriental.id,
+      topNotes: ["Bois de rose", "Cardamome", "Poivre de Sichuan"],
+      heartNotes: ["Bois de Oud", "Bois de santal", "Vétiver"],
+      baseNotes: ["Fève tonka", "Vanille", "Ambre"],
       images: [
         "https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=600&q=80",
       ],
