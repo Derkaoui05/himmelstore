@@ -121,7 +121,7 @@ export default function ProductFilters({
               className={`rounded-lg border px-4 py-2 text-xs font-medium tracking-wide transition-all ${
                 gender === g
                   ? "border-gold bg-gold text-stone-950 font-semibold shadow-xs"
-                  : "border-stone-200 bg-[#FAF8F5] text-stone-600 hover:border-stone-300 hover:text-stone-900 hover:bg-white"
+                  : "border-stone-200 bg-cream text-stone-600 hover:border-stone-300 hover:text-stone-900 hover:bg-white"
               }`}
             >
               {g === "HOMME" ? "Homme" : g === "FEMME" ? "Femme" : "Unisexe"}
