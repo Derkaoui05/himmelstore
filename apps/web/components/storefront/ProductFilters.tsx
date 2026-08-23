@@ -88,7 +88,7 @@ export default function ProductFilters({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && applyFilters({ search })}
-            className="w-full rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+            className="w-full rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
           />
           {search && (
             <button
@@ -212,7 +212,7 @@ export default function ProductFilters({
             placeholder="Min"
             value={priceMin}
             onChange={(e) => setPriceMin(e.target.value)}
-            className="w-full rounded-lg border border-stone-200 bg-[#FAF8F5] px-3 py-2 text-xs text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none"
+            className="w-full rounded-lg border border-stone-200 bg-cream px-3 py-2 text-xs text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none"
           />
           <span className="text-stone-400 text-xs">—</span>
           <input
@@ -220,7 +220,7 @@ export default function ProductFilters({
             placeholder="Max"
             value={priceMax}
             onChange={(e) => setPriceMax(e.target.value)}
-            className="w-full rounded-lg border border-stone-200 bg-[#FAF8F5] px-3 py-2 text-xs text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none"
+            className="w-full rounded-lg border border-stone-200 bg-cream px-3 py-2 text-xs text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none"
           />
         </div>
         <button

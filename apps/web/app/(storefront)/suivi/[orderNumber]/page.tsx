@@ -162,7 +162,7 @@ export default function TrackingPage({ params }: TrackingPageProps) {
           <div className="mt-4 flex flex-col divide-y divide-stone-100">
             {order.items.map((item) => (
               <div key={item.id} className="py-3.5 flex items-center gap-4 first:pt-0 last:pb-0">
-                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-[#FAF8F5]">
+                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-cream">
                   <Image
                     src={item.variant.product.images[0] || "/placeholder.jpg"}
                     alt={item.variant.product.name}

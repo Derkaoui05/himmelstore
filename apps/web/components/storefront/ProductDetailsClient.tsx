@@ -166,7 +166,7 @@ export default function ProductDetailsClient({ product }: { product: Product }) 
                   className={`rounded-lg border px-5 py-3 text-sm font-medium tracking-wide transition-all cursor-pointer ${
                     selectedVariant.id === v.id
                       ? "border-gold bg-gold/15 text-gold-dark font-semibold shadow-xs"
-                      : "border-stone-200 bg-[#FAF8F5] text-stone-700 hover:border-stone-300 hover:bg-white"
+                      : "border-stone-200 bg-cream text-stone-700 hover:border-stone-300 hover:bg-white"
                   }`}
                 >
                   {v.size} — {Number(v.price).toLocaleString("fr-FR")} DH

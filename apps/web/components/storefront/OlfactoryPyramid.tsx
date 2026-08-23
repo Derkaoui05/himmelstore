@@ -64,7 +64,7 @@ export default function OlfactoryPyramid({
   ];
 
   return (
-    <div className="mt-10 rounded-2xl border border-stone-200/80 bg-gradient-to-b from-[#FCFBF8] to-white p-6 sm:p-8 shadow-xs">
+    <div className="mt-10 rounded-2xl border border-stone-200/80 bg-linear-to-b from-[#FCFBF8] to-white p-6 sm:p-8 shadow-xs">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-stone-200/70 pb-5">
         <div>
           <span className="text-[10px] font-bold uppercase tracking-widest text-gold-dark">

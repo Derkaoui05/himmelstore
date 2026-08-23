@@ -223,7 +223,7 @@ export default function CheckoutPage() {
                       id="customerName"
                       placeholder="Ex: Ahmed Benjelloun"
                       {...register("customerName")}
-                      className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+                      className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
                     />
                     {errors.customerName && (
                       <span className="text-xs text-rose-600 mt-1">{errors.customerName.message}</span>
@@ -240,7 +240,7 @@ export default function CheckoutPage() {
                       id="phone"
                       placeholder="Ex: 0612345678"
                       {...register("phone")}
-                      className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+                      className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
                     />
                     {errors.phone && (
                       <span className="text-xs text-rose-600 mt-1">{errors.phone.message}</span>
@@ -258,7 +258,7 @@ export default function CheckoutPage() {
                       id="city"
                       placeholder="Ex: Casablanca"
                       {...register("city")}
-                      className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+                      className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
                     />
                     {errors.city && (
                       <span className="text-xs text-rose-600 mt-1">{errors.city.message}</span>
@@ -275,7 +275,7 @@ export default function CheckoutPage() {
                       placeholder="Quartier, N° de rue, N° d'appartement..."
                       rows={3}
                       {...register("address")}
-                      className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+                      className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
                     />
                     {errors.address && (
                       <span className="text-xs text-rose-600 mt-1">{errors.address.message}</span>
@@ -292,7 +292,7 @@ export default function CheckoutPage() {
                       placeholder="Ex: Appelez-moi avant de livrer, ou livrer après 17h..."
                       rows={2}
                       {...register("notes")}
-                      className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+                      className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
                     />
                   </div>
                 </div>

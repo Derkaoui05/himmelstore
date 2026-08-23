@@ -17,7 +17,7 @@ export default function WishlistPage() {
 
   if (!mounted) {
     return (
-      <main className="min-h-[70vh] flex items-center justify-center bg-[#FAF8F5]">
+      <main className="min-h-[70vh] flex items-center justify-center bg-cream">
         <div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" />
       </main>
     );
@@ -30,7 +30,7 @@ export default function WishlistPage() {
   };
 
   return (
-    <main className="min-h-[80vh] bg-[#FAF8F5] py-12 sm:py-16">
+    <main className="min-h-[80vh] bg-cream py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-stone-200/80 pb-6">

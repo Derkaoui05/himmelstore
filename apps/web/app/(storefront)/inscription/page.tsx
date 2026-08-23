@@ -106,7 +106,7 @@ function RegisterForm() {
               type="text"
               placeholder="Ex: Fatima Zahrae"
               {...register("name")}
-              className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+              className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
             />
             {errors.name && (
               <span className="text-xs text-rose-600">{errors.name.message}</span>
@@ -122,7 +122,7 @@ function RegisterForm() {
               type="email"
               placeholder="votre@email.com"
               {...register("email")}
-              className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+              className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
             />
             {errors.email && (
               <span className="text-xs text-rose-600">{errors.email.message}</span>
@@ -138,7 +138,7 @@ function RegisterForm() {
               type="password"
               placeholder="••••••••"
               {...register("password")}
-              className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+              className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
             />
             {errors.password && (
               <span className="text-xs text-rose-600">{errors.password.message}</span>
@@ -155,7 +155,7 @@ function RegisterForm() {
                 type="tel"
                 placeholder="Ex: 0612345678"
                 {...register("phone")}
-                className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+                className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
               />
               {errors.phone && (
                 <span className="text-xs text-rose-600">{errors.phone.message}</span>
@@ -171,7 +171,7 @@ function RegisterForm() {
                 type="text"
                 placeholder="Ex: Casablanca"
                 {...register("city")}
-                className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+                className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
               />
               {errors.city && (
                 <span className="text-xs text-rose-600">{errors.city.message}</span>
@@ -188,7 +188,7 @@ function RegisterForm() {
               rows={2}
               placeholder="Quartier, Rue, N°..."
               {...register("address")}
-              className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+              className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
             />
             {errors.address && (
               <span className="text-xs text-rose-600">{errors.address.message}</span>
@@ -222,7 +222,7 @@ function RegisterForm() {
 
 export default function RegisterPage() {
   return (
-    <main className="grow flex items-center justify-center bg-[#FAF8F5]">
+    <main className="grow flex items-center justify-center bg-cream">
       <Suspense fallback={<div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" />}>
         <RegisterForm />
       </Suspense>

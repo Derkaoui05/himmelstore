@@ -18,7 +18,7 @@ export default function AdminLoginPage() {
     },
   });
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: any) => { 
     setError(null);
     setLoading(true);
 
@@ -43,7 +43,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#FAF8F5] px-6">
+    <div className="flex min-h-screen items-center justify-center bg-cream px-6">
       {/* Decorative background light */}
       <div className="absolute top-1/2 left-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-gold/10 blur-[120px] pointer-events-none" />
 
@@ -72,7 +72,7 @@ export default function AdminLoginPage() {
               type="email"
               placeholder="admin@himmel.ma"
               {...register("email", { required: true })}
-              className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+              className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
             />
           </div>
 
@@ -85,7 +85,7 @@ export default function AdminLoginPage() {
               type="password"
               placeholder="••••••••"
               {...register("password", { required: true })}
-              className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+              className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
             />
           </div>
 

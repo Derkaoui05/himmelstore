@@ -90,7 +90,7 @@ function LoginForm() {
               type="email"
               placeholder="votre@email.com"
               {...register("email")}
-              className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+              className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
             />
             {errors.email && (
               <span className="text-xs text-rose-600">{errors.email.message}</span>
@@ -106,7 +106,7 @@ function LoginForm() {
               type="password"
               placeholder="••••••••"
               {...register("password")}
-              className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+              className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
             />
             {errors.password && (
               <span className="text-xs text-rose-600">{errors.password.message}</span>
@@ -140,7 +140,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <main className="grow flex items-center justify-center bg-[#FAF8F5]">
+    <main className="grow flex items-center justify-center bg-cream">
       <Suspense fallback={<div className="h-8 w-8 animate-spin rounded-full border-2 border-gold border-t-transparent" />}>
         <LoginForm />
       </Suspense>

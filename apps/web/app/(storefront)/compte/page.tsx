@@ -202,7 +202,7 @@ export default function AccountPage() {
                     <div className="mt-4 flex flex-col gap-3">
                       {order.items.map((item) => (
                         <div key={item.id} className="flex items-center gap-4">
-                          <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-[#FAF8F5]">
+                          <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-cream">
                             <Image
                               src={item.variant.product.images[0] || "/placeholder.jpg"}
                               alt={item.variant.product.name}
@@ -295,7 +295,7 @@ export default function AccountPage() {
                   <input
                     type="text"
                     {...register("name")}
-                    className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none"
+                    className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none"
                   />
                 </div>
 
@@ -308,7 +308,7 @@ export default function AccountPage() {
                       type="tel"
                       placeholder="Ex: 0612345678"
                       {...register("phone")}
-                      className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none"
+                      className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none"
                     />
                   </div>
 
@@ -320,7 +320,7 @@ export default function AccountPage() {
                       type="text"
                       placeholder="Ex: Casablanca"
                       {...register("city")}
-                      className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none"
+                      className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none"
                     />
                   </div>
                 </div>
@@ -333,7 +333,7 @@ export default function AccountPage() {
                     rows={2}
                     placeholder="Quartier, Rue, N° d'appartement..."
                     {...register("address")}
-                    className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none"
+                    className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none"
                   />
                 </div>
 

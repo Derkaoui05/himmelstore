@@ -182,7 +182,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
             type="text"
             placeholder="Ex: Bleu de Chanel"
             {...register("name")}
-            className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+            className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
           />
           {errors.name && <span className="text-xs text-rose-600">{errors.name.message}</span>}
         </div>
@@ -194,7 +194,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
             type="text"
             placeholder="Ex: bleu-de-chanel"
             {...register("slug")}
-            className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+            className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
           />
           {errors.slug && <span className="text-xs text-rose-600">{errors.slug.message}</span>}
         </div>
@@ -206,7 +206,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
             type="text"
             placeholder="Ex: Chanel"
             {...register("brand")}
-            className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+            className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
           />
           {errors.brand && <span className="text-xs text-rose-600">{errors.brand.message}</span>}
         </div>
@@ -218,7 +218,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
             type="text"
             placeholder="Ex: Eau de Parfum, Eau de Toilette..."
             {...register("concentration")}
-            className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+            className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
           />
         </div>
 
@@ -227,7 +227,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
           <label className="text-xs font-semibold uppercase tracking-wider text-stone-700">Catégorie *</label>
           <select
             {...register("categoryId")}
-            className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+            className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
           >
             <option value="">Sélectionner une catégorie</option>
             {categories?.map((cat) => (
@@ -244,7 +244,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
           <label className="text-xs font-semibold uppercase tracking-wider text-stone-700">Genre *</label>
           <select
             {...register("gender")}
-            className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+            className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
           >
             <option value="HOMME">Homme</option>
             <option value="FEMME">Femme</option>
@@ -261,7 +261,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
           placeholder="Décrivez les notes de tête, de cœur, de fond, et l'histoire olfactive..."
           rows={4}
           {...register("description")}
-          className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+          className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
         />
         {errors.description && <span className="text-xs text-rose-600">{errors.description.message}</span>}
       </div>
@@ -285,7 +285,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
                 const arr = e.target.value.split(",").map((s) => s.trim()).filter(Boolean);
                 setValue("topNotes", arr, { shouldValidate: true });
               }}
-              className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+              className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
             />
           </div>
 
@@ -300,7 +300,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
                 const arr = e.target.value.split(",").map((s) => s.trim()).filter(Boolean);
                 setValue("heartNotes", arr, { shouldValidate: true });
               }}
-              className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+              className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
             />
           </div>
 
@@ -315,7 +315,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
                 const arr = e.target.value.split(",").map((s) => s.trim()).filter(Boolean);
                 setValue("baseNotes", arr, { shouldValidate: true });
               }}
-              className="rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+              className="rounded-lg border border-stone-200 bg-cream px-4 py-2.5 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
             />
           </div>
         </div>
@@ -351,7 +351,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
         {/* Images list display */}
         <div className="flex flex-wrap gap-4">
           {imagesList.map((imgUrl, idx) => (
-            <div key={idx} className="group relative h-24 w-24 rounded-lg overflow-hidden border border-stone-200 bg-[#FAF8F5]">
+            <div key={idx} className="group relative h-24 w-24 rounded-lg overflow-hidden border border-stone-200 bg-cream">
               <img src={imgUrl} alt={`Product thumbnail ${idx + 1}`} className="object-cover h-full w-full" />
               <button
                 type="button"
@@ -371,7 +371,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
             placeholder="Entrez l'URL d'une image (ex: Unsplash, Cloudinary...)"
             value={newImageUrl}
             onChange={(e) => setNewImageUrl(e.target.value)}
-            className="grow rounded-lg border border-stone-200 bg-[#FAF8F5] px-4 py-2 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
+            className="grow rounded-lg border border-stone-200 bg-cream px-4 py-2 text-sm text-stone-900 placeholder-stone-400 focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
           />
           <button
             type="button"
@@ -400,7 +400,7 @@ export default function ProductForm({ initialData, productId }: ProductFormProps
 
         <div className="flex flex-col gap-4">
           {variantFields.map((field, idx) => (
-            <div key={field.id} className="grid grid-cols-1 sm:grid-cols-5 gap-4 p-4 rounded-xl bg-[#FAF8F5] border border-stone-200 items-end">
+            <div key={field.id} className="grid grid-cols-1 sm:grid-cols-5 gap-4 p-4 rounded-xl bg-cream border border-stone-200 items-end">
               {/* Size */}
               <div className="flex flex-col gap-1.5">
                 <label className="text-[10px] uppercase tracking-wider text-stone-500 font-semibold">Taille *</label>
