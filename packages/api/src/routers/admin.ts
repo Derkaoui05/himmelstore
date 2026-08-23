@@ -1,150 +1,350 @@
 import { z } from "zod";
-import { protectedProcedure, router } from "../trpc";
+import { router, protectedProcedure, publicProcedure } from "../trpc";
+import { TRPCError } from "@trpc/server";
+import { randomBytes, scryptSync } from "crypto";
+
+function hashPassword(password: string): string {
+  const salt = randomBytes(16).toString("hex");
+  const hash = scryptSync(password, salt, 64).toString("hex");
+  return `${salt}:${hash}`;
+}
 
 export const adminRouter = router({
   /**
-   * Fetch aggregate stats and charts data for the Admin Dashboard.
-   * Enforced via protectedProcedure.
+   * List all admin accounts
    */
-  dashboardStats: protectedProcedure
+  list: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db.admin.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }),
+
+  /**
+   * Create a new admin user
+   */
+  create: protectedProcedure
     .input(
       z.object({
-        days: z.number().default(30),
+        name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
+        email: z.string().email("Adresse email invalide"),
+        password: z.string().min(6, "Le mot de passe doit contenir au moins 6 caractères"),
       })
     )
-    .query(async ({ ctx, input }) => {
-      const daysCount = input.days;
-      
-      const startDate = new Date();
-      startDate.setDate(startDate.getDate() - daysCount);
-      startDate.setHours(0, 0, 0, 0);
+    .mutation(async ({ ctx, input }) => {
+      const email = input.email.trim().toLowerCase();
 
-      // 1. Get active orders (non-cancelled) in time range for revenue and orders stats
-      const orders = await ctx.db.order.findMany({
-        where: {
-          createdAt: {
-            gte: startDate,
-          },
+      // Check email conflict in Admin
+      const existingAdmin = await ctx.db.admin.findUnique({
+        where: { email },
+      });
+
+      if (existingAdmin) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: "Un administrateur avec cette adresse email existe déjà.",
+        });
+      }
+
+      const hashedPassword = hashPassword(input.password);
+
+      const newAdmin = await ctx.db.admin.create({
+        data: {
+          name: input.name,
+          email,
+          password: hashedPassword,
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          createdAt: true,
         },
       });
 
-      // Calculate totals
-      const totalOrdersCount = orders.length;
-      const cancelledOrdersCount = orders.filter(o => o.status === "CANCELLED").length;
-      const activeOrdersCount = totalOrdersCount - cancelledOrdersCount;
-      
-      const totalRevenue = orders
-        .filter(o => o.status !== "CANCELLED")
-        .reduce((sum, order) => sum + Number(order.total), 0);
+      return newAdmin;
+    }),
 
-      // 2. Generate daily chart data (revenue & order count per day)
-      const dailyDataMap = new Map<string, { date: string; revenue: number; orders: number }>();
-      for (let i = daysCount - 1; i >= 0; i--) {
-        const date = new Date();
-        date.setDate(date.getDate() - i);
-        const dateStr = date.toLocaleDateString("fr-FR", { day: "numeric", month: "short" }); // e.g. "29 juil."
-        const key = date.toISOString().slice(0, 10); // YYYY-MM-DD
-        dailyDataMap.set(key, { date: dateStr, revenue: 0, orders: 0 });
-      }
+  /**
+   * Update an existing admin's details (name, email, optional new password)
+   */
+  update: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
+        email: z.string().email("Adresse email invalide"),
+        password: z.string().optional().or(z.literal("")),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const email = input.email.trim().toLowerCase();
 
-      for (const order of orders) {
-        if (order.status === "CANCELLED") continue;
-        const key = order.createdAt.toISOString().slice(0, 10);
-        const existing = dailyDataMap.get(key);
-        if (existing) {
-          existing.revenue += Number(order.total);
-          existing.orders += 1;
-        }
-      }
-      const dailyChartData = Array.from(dailyDataMap.values());
-
-      // 3. Top selling products
-      const orderItems = await ctx.db.orderItem.findMany({
-        where: {
-          order: {
-            status: {
-              not: "CANCELLED",
-            },
-            createdAt: {
-              gte: startDate,
-            },
-          },
-        },
-        include: {
-          variant: {
-            include: {
-              product: true,
-            },
-          },
-        },
+      const existingAdmin = await ctx.db.admin.findUnique({
+        where: { id: input.id },
       });
 
-      const productSalesMap = new Map<
-        string,
-        { id: string; name: string; brand: string; quantity: number; revenue: number; image: string }
-      >();
+      if (!existingAdmin) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Administrateur non trouvé.",
+        });
+      }
 
-      for (const item of orderItems) {
-        const product = item.variant.product;
-        const existing = productSalesMap.get(product.id);
-        const itemRevenue = Number(item.price) * item.quantity;
-        
-        if (existing) {
-          existing.quantity += item.quantity;
-          existing.revenue += itemRevenue;
-        } else {
-          productSalesMap.set(product.id, {
-            id: product.id,
-            name: product.name,
-            brand: product.brand,
-            quantity: item.quantity,
-            revenue: itemRevenue,
-            image: product.images[0] || "",
+      // Check email collision if email changed
+      if (email !== existingAdmin.email) {
+        const emailConflict = await ctx.db.admin.findUnique({
+          where: { email },
+        });
+
+        if (emailConflict) {
+          throw new TRPCError({
+            code: "CONFLICT",
+            message: "Cette adresse email est déjà utilisée par un autre administrateur.",
           });
         }
       }
 
-      const topProducts = Array.from(productSalesMap.values())
-        .sort((a, b) => b.quantity - a.quantity)
-        .slice(0, 5);
+      const updateData: { name: string; email: string; password?: string } = {
+        name: input.name,
+        email,
+      };
 
-      // 4. Low stock variants alert (stock <= 5)
-      const lowStockVariants = await ctx.db.variant.findMany({
+      if (input.password && input.password.trim().length >= 6) {
+        updateData.password = hashPassword(input.password.trim());
+      }
+
+      return ctx.db.admin.update({
+        where: { id: input.id },
+        data: updateData,
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          updatedAt: true,
+        },
+      });
+    }),
+
+  /**
+   * Delete an admin account
+   */
+  delete: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const count = await ctx.db.admin.count();
+
+      if (count <= 1) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Impossible de supprimer le dernier administrateur du système.",
+        });
+      }
+
+      const admin = await ctx.db.admin.findUnique({
+        where: { id: input.id },
+      });
+
+      if (!admin) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Administrateur introuvable.",
+        });
+      }
+
+      await ctx.db.admin.delete({
+        where: { id: input.id },
+      });
+
+      return { success: true };
+    }),
+
+  /**
+   * Dashboard statistics
+   */
+  dashboardStats: protectedProcedure
+    .input(
+      z.object({
+        days: z.number().min(1).max(365).default(30),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const since = new Date();
+      since.setDate(since.getDate() - input.days);
+
+      // Fetch all orders in the date range
+      const orders = await ctx.db.order.findMany({
         where: {
-          stock: {
-            lte: 5,
-          },
-          product: {
-            active: true,
-          },
+          createdAt: { gte: since },
         },
         include: {
-          product: true,
+          items: {
+            include: {
+              variant: {
+                include: {
+                  product: true,
+                },
+              },
+            },
+          },
         },
-        orderBy: {
-          stock: "asc",
-        },
-        take: 5,
+        orderBy: { createdAt: "asc" },
       });
+
+      // Summary stats
+      const activeOrders = orders.filter((o) => o.status !== "CANCELLED");
+      const cancelledOrders = orders.filter((o) => o.status === "CANCELLED");
+      const totalRevenue = activeOrders.reduce(
+        (sum, o) => sum + Number(o.total),
+        0
+      );
+
+      // Low stock alerts
+      const lowStockVariants = await ctx.db.variant.findMany({
+        where: { stock: { lte: 5 } },
+        include: { product: true },
+        orderBy: { stock: "asc" },
+        take: 10,
+      });
+
+      // Revenue per day
+      const revenueByDay: Record<string, { revenue: number; orders: number }> = {};
+      for (const order of activeOrders) {
+        const day = order.createdAt.toISOString().slice(0, 10);
+        if (!revenueByDay[day]) revenueByDay[day] = { revenue: 0, orders: 0 };
+        revenueByDay[day].revenue += Number(order.total);
+        revenueByDay[day].orders += 1;
+      }
+
+      const revenuePerDay = Object.entries(revenueByDay)
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([date, data]) => ({
+          date,
+          revenue: Math.round(data.revenue * 100) / 100,
+          orders: data.orders,
+        }));
+
+      // Top products
+      const productSales: Record<
+        string,
+        { id: string; name: string; brand: string; quantity: number; revenue: number }
+      > = {};
+      for (const order of activeOrders) {
+        for (const item of order.items) {
+          const pid = item.variant.product.id;
+          if (!productSales[pid]) {
+            productSales[pid] = {
+              id: pid,
+              name: item.variant.product.name,
+              brand: item.variant.product.brand,
+              quantity: 0,
+              revenue: 0,
+            };
+          }
+          productSales[pid].quantity += item.quantity;
+          productSales[pid].revenue += Number(item.price) * item.quantity;
+        }
+      }
+
+      const topProducts = Object.values(productSales)
+        .sort((a, b) => b.revenue - a.revenue)
+        .slice(0, 5)
+        .map((p) => ({
+          ...p,
+          revenue: Math.round(p.revenue * 100) / 100,
+        }));
 
       return {
         summary: {
-          totalRevenue,
-          totalOrdersCount,
-          activeOrdersCount,
-          cancelledOrdersCount,
+          totalRevenue: Math.round(totalRevenue * 100) / 100,
+          totalOrdersCount: orders.length,
+          activeOrdersCount: activeOrders.length,
+          cancelledOrdersCount: cancelledOrders.length,
           lowStockAlertsCount: lowStockVariants.length,
         },
-        dailyChartData,
+        dailyChartData: revenuePerDay,
+        revenuePerDay,
         topProducts,
-        lowStockAlerts: lowStockVariants.map(v => ({
+        lowStockAlerts: lowStockVariants.map((v) => ({
           variantId: v.id,
           productName: v.product.name,
           brand: v.product.brand,
           size: v.size,
-          stock: v.stock,
           sku: v.sku,
+          stock: v.stock,
         })),
       };
     }),
+
+  /**
+   * Get store branding settings (Public for storefront & admin)
+   */
+  getStoreSettings: publicProcedure.query(async ({ ctx }) => {
+    let setting = await ctx.db.storeSetting.findUnique({
+      where: { id: "default" },
+    });
+
+    if (!setting) {
+      setting = await ctx.db.storeSetting.create({
+        data: {
+          id: "default",
+          storeName: "HIMMEL",
+          storeTagline: "fatima zahrae derkaoui",
+          logoMode: "TEXT_ONLY",
+        },
+      });
+    }
+
+    return setting;
+  }),
+
+  /**
+   * Update store branding settings (Admin only)
+   */
+  updateStoreSettings: protectedProcedure
+    .input(
+      z.object({
+        storeName: z.string().min(1, "Le nom de la boutique est requis"),
+        storeTagline: z.string().optional().default(""),
+        logoUrl: z.string().optional().nullable(),
+        logoMode: z.enum(["TEXT_ONLY", "IMAGE_ONLY", "IMAGE_AND_TEXT"]).default("TEXT_ONLY"),
+        faviconUrl: z.string().optional().nullable(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const setting = await ctx.db.storeSetting.upsert({
+        where: { id: "default" },
+        update: {
+          storeName: input.storeName,
+          storeTagline: input.storeTagline || "",
+          logoUrl: input.logoUrl || null,
+          logoMode: input.logoMode,
+          faviconUrl: input.faviconUrl || null,
+        },
+        create: {
+          id: "default",
+          storeName: input.storeName,
+          storeTagline: input.storeTagline || "",
+          logoUrl: input.logoUrl || null,
+          logoMode: input.logoMode,
+          faviconUrl: input.faviconUrl || null,
+        },
+      });
+
+      return setting;
+    }),
 });
+
+

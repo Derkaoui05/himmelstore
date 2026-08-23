@@ -175,7 +175,7 @@ export default function AdminDashboardPage() {
           </div>
           {stats?.topProducts && stats.topProducts.length > 0 ? (
             <div className="flex flex-col divide-y divide-stone-100">
-              {stats.topProducts.map((p, index) => (
+              {stats.topProducts.map((p: any, index: number) => (
                 <div key={p.id} className="flex justify-between items-center py-3 text-xs">
                   <div className="flex items-center gap-3">
                     <span className="text-stone-400 font-bold w-4">#{index + 1}</span>
@@ -204,7 +204,7 @@ export default function AdminDashboardPage() {
           </div>
           {stats?.lowStockAlerts && stats.lowStockAlerts.length > 0 ? (
             <div className="flex flex-col divide-y divide-stone-100">
-              {stats.lowStockAlerts.map((item) => (
+              {stats.lowStockAlerts.map((item: any) => (
                 <div key={item.variantId} className="flex justify-between items-center py-3 text-xs">
                   <div className="flex flex-col">
                     <span className="font-semibold text-stone-900">

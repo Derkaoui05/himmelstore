@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BrandLogo from "@/components/common/BrandLogo";
 
 export default function Footer() {
   return (
@@ -6,14 +7,7 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 sm:px-8">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-4">
           <div className="flex flex-col gap-4">
-            <Link href="/" className="flex flex-col">
-              <span className="font-heading text-xl font-bold tracking-widest text-gold-dark transition-colors hover:text-gold sm:text-2xl">
-                HIMMEL
-              </span>
-              <span className="font-heading text-xs uppercase text-stone-500 w-fit ml-8 tracking-wide">
-                fatima zahrae derkaoui
-              </span>
-            </Link>
+            <BrandLogo subtitleClassName="text-stone-500" />
             <p className="text-sm leading-relaxed text-stone-600">
               Votre destination ultime pour les parfums de luxe et de niche au Maroc. L'excellence olfactive livrée chez vous.
             </p>

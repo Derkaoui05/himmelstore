@@ -6,6 +6,7 @@ import { useCartStore } from "@/lib/store";
 import { useWishlistStore } from "@/lib/wishlistStore";
 import { useState, useEffect, useCallback } from "react";
 import { useSession, signOut } from "next-auth/react";
+import BrandLogo from "@/components/common/BrandLogo";
 
 const navLinks = [
   { href: "/", label: "Accueil", isActive: (pathname: string) => pathname === "/" },
@@ -82,14 +83,7 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-8">
         {/* Logo + desktop nav */}
         <div className="flex min-w-0 items-center gap-6 md:gap-8">
-          <Link href="/" className="flex flex-col">
-            <span className="font-heading text-xl font-bold tracking-widest text-gold-dark transition-colors hover:text-gold sm:text-2xl">
-              HIMMEL
-            </span>
-            <span className="font-semibold text-xs uppercase text-black w-fit ml-8 tracking-wide">
-              fatima zahrae derkaoui
-            </span>
-          </Link>
+          <BrandLogo />
         </div>
         <nav className="hidden items-center gap-8 md:flex" aria-label="Navigation principale">
           {navLinks.map((link) => (

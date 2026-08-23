@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import BrandLogo from "@/components/common/BrandLogo";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -49,9 +50,9 @@ export default function AdminLoginPage() {
 
       <div className="relative z-10 w-full max-w-md rounded-2xl border border-stone-200/80 bg-white p-8 shadow-xl">
         <div className="flex flex-col items-center gap-2 text-center">
-          <Link href="/" className="font-heading text-3xl font-bold tracking-widest text-gold-dark mb-2 hover:text-gold transition-colors">
-            HIMMEL
-          </Link>
+          <div className="mb-2">
+            <BrandLogo />
+          </div>
           <h2 className="text-xl font-semibold text-stone-900">Espace Administration</h2>
           <p className="text-xs text-stone-500">Connectez-vous pour gérer votre boutique en ligne</p>
         </div>
