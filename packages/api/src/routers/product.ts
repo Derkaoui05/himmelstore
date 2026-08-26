@@ -362,28 +362,72 @@ export const productRouter = router({
 
   /**
    * Delete a product (Admin only).
-   * Attempts a hard delete, falls back to making active = false if referenced in orders.
+   * - If the product is linked to in-progress orders (PENDING, CONFIRMED, SHIPPED), deletion is blocked with an explicit error.
+   * - If all linked orders are DELIVERED or CANCELLED (or no orders exist), permanently deletes the product and associated order item references.
    */
   delete: protectedProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
-      try {
-        await ctx.db.product.delete({
-          where: { id: input.id },
+      // 1. Fetch product with its variants, orderItems and related orders
+      const product = await ctx.db.product.findUnique({
+        where: { id: input.id },
+        include: {
+          variants: {
+            include: {
+              orderItems: {
+                include: {
+                  order: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (!product) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Produit non trouvé.",
         });
-        return { success: true, deleted: true, message: "Produit supprimé définitivement." };
-      } catch (err) {
-        // If referencing in order items, soft delete
-        await ctx.db.product.update({
-          where: { id: input.id },
-          data: { active: false },
-        });
-        return {
-          success: true,
-          deleted: false,
-          softDeleted: true,
-          message: "Le produit est lié à des commandes passées. Il a été désactivé pour la boutique storefront.",
-        };
       }
+
+      // 2. Check for any in-progress orders
+      const allOrderItems = product.variants.flatMap((v) => v.orderItems);
+      const inProgressOrders = allOrderItems
+        .map((item) => item.order)
+        .filter((o) => o.status === "PENDING" || o.status === "CONFIRMED" || o.status === "SHIPPED");
+
+      if (inProgressOrders.length > 0) {
+        const uniqueOrderNums = Array.from(new Set(inProgressOrders.map((o) => o.orderNumber))).join(", ");
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: `Impossible de supprimer "${product.name}" : ce produit est associé à des commandes en cours de traitement ou d'expédition (${uniqueOrderNums}). Veuillez marquer ces commandes comme livrées ou annulées avant de pouvoir supprimer ce produit.`,
+        });
+      }
+
+      // 3. If all orders are DELIVERED/CANCELLED or no orders exist, delete cleanly
+      const variantIds = product.variants.map((v) => v.id);
+
+      await ctx.db.$transaction(async (tx) => {
+        // Delete order items of completed/cancelled orders for these variants
+        if (variantIds.length > 0) {
+          await tx.orderItem.deleteMany({
+            where: {
+              variantId: { in: variantIds },
+            },
+          });
+        }
+
+        // Delete the product itself (cascades to variants)
+        await tx.product.delete({
+          where: { id: input.id },
+        });
+      });
+
+      return {
+        success: true,
+        deleted: true,
+        message: `Le produit "${product.name}" a été définitivement supprimé.`,
+      };
     }),
 });

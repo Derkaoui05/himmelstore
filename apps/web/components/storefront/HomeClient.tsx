@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { useMemo, useState } from "react";
 import ProductCard from "./ProductCard";
 
 interface Product {
@@ -144,7 +144,7 @@ export default function HomeClient({
 
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-8">
-            
+
             {/* Left Column: Poetic Headline & Actions */}
             <div className="flex flex-col items-start lg:col-span-7">
               {/* Luxury Badge */}
@@ -203,7 +203,7 @@ export default function HomeClient({
             <div className="relative flex items-center justify-center lg:col-span-5">
               {/* Outer decorative ring */}
               <div className="relative flex aspect-square w-full max-w-md items-center justify-center rounded-3xl border border-gold/30 bg-gradient-to-tr from-amber-100/40 via-white/80 to-amber-50/50 p-6 shadow-2xl backdrop-blur-md">
-                
+
                 {/* Background aura */}
                 <div className="absolute inset-4 rounded-2xl bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold/25 via-amber-50/20 to-transparent blur-xl" />
 
@@ -319,7 +319,7 @@ export default function HomeClient({
                     className="object-cover transition-transform duration-700 group-hover:scale-108"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  
+
                   {/* Badge */}
                   <span className="absolute top-4 left-4 rounded-full border border-white/30 bg-black/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white backdrop-blur-md">
                     {universe.badge}
@@ -375,11 +375,10 @@ export default function HomeClient({
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveTab(tab.id as any)}
-                  className={`rounded-full px-4 py-2 font-medium tracking-wide transition-all cursor-pointer ${
-                    activeTab === tab.id
+                  className={`rounded-full px-4 py-2 font-medium tracking-wide transition-all cursor-pointer ${activeTab === tab.id
                       ? "bg-stone-950 text-white font-bold shadow-xs"
                       : "text-stone-600 hover:text-stone-950 hover:bg-stone-200/50"
-                  }`}
+                    }`}
                 >
                   {tab.label}
                 </button>
@@ -534,7 +533,7 @@ export default function HomeClient({
       {/* 8. WHATSAPP CONCIERGE & PRIVATE VIP CALLOUT */}
       <section className="bg-stone-950 py-16 text-white overflow-hidden relative">
         <div className="absolute top-0 right-0 h-80 w-80 rounded-full bg-gold/10 blur-[100px] pointer-events-none" />
-        
+
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8 rounded-3xl border border-white/10 bg-white/5 p-8 sm:p-12 backdrop-blur-md">
             <div className="max-w-xl text-center lg:text-left">
@@ -551,7 +550,7 @@ export default function HomeClient({
 
             <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
               <a
-                href="https://wa.me/212600000000?text=Bonjour,%20je%20souhaite%20un%20conseil%20pour%20choisir%20un%20parfum%20sur%20Himmel."
+                href="https://wa.me/212694338163?text=Bonjour,%20je%20souhaite%20un%20conseil%20pour%20choisir%20un%20parfum%20sur%20Himmel."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-emerald-600 px-8 text-xs font-bold uppercase tracking-wider text-white shadow-lg shadow-emerald-950/40 transition-all hover:bg-emerald-500 hover:scale-105 active:scale-95"
