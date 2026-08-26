@@ -1,5 +1,5 @@
-import Link from "next/link";
 import BrandLogo from "@/components/common/BrandLogo";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -57,7 +57,7 @@ export default function Footer() {
               Contact
             </h3>
             <ul className="mt-4 flex flex-col gap-3 text-sm text-stone-600">
-              <li>Email: contact@himmel.ma</li>
+              <li>Email: himmelcontact26@gmail.com</li>
               <li>Tél: +212 6 94 33 81 63</li>
               <li>Fès, Maroc</li>
             </ul>
